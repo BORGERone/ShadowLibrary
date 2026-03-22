@@ -1,4 +1,4 @@
-<!-- Language Flags -->
+<!-- Флаги для выбора языка -->
 <p align="center">
   <a href="docs/README.ru.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" alt="Russian" width="30"/></a>
   <a href="docs/README.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="English" width="30"/></a>
@@ -19,7 +19,7 @@
 </h1>
 
 <p align="center">
-  <strong>Steam Game Unlock Tool</strong>
+  <strong>Инструмент для разблокировки игр в Steam</strong>
 </p>
 
 <p align="center">
@@ -39,141 +39,139 @@
 
 ---
 
-## 📖 Documentation
+## Документация
 
-Full documentation is available in multiple languages. Select your language above or browse the **[docs/](docs/)** folder.
+Полная документация доступна на нескольких языках. Выберите язык выше или перейдите в папку **[docs/](docs/)**.
 
-### Quick Links
+### Быстрые ссылки
 
-| Language | File |
-|----------|------|
-| 🇷🇺 Русский | [docs/README.ru.md](docs/README.ru.md) |
-| 🇺🇸 English | [docs/README.md](docs/README.md) |
-| 🇫🇷 Français | [docs/README.fr.md](docs/README.fr.md) |
-| 🇪🇸 Español | [docs/README.es.md](docs/README.es.md) |
-| 🇩🇪 Deutsch | [docs/README.de.md](docs/README.de.md) |
-| 🇮🇹 Italiano | [docs/README.it.md](docs/README.it.md) |
-| 🇵🇱 Polski | [docs/README.pl.md](docs/README.pl.md) |
-| 🇵🇹 Português | [docs/README.pt.md](docs/README.pt.md) |
-| 🇯🇵 日本語 | [docs/README.ja.md](docs/README.ja.md) |
-| 🇰🇷 한국어 | [docs/README.ko.md](docs/README.ko.md) |
-| 🇨🇳 中文 | [docs/README.zh.md](docs/README.zh.md) |
-| 🇮🇳 हिन्दी | [docs/README.hi.md](docs/README.hi.md) |
-
----
-
-## 📋 About
-
-**Shadow Library** is a software solution that expands Steam users' capabilities through alternative game activation methods. The application provides a convenient web interface for managing game unlocks through popular tools: **[SteamTools](https://steamtools.net/)** and **GreenLuma**.
-
-### Features
-
-- **Two operation modes**: SteamTools and GreenLuma
-- **Multiple manifest sources**: SteamAutoCrack/ManifestHub and ManifestAutoUpdate
-- **Automatic manifest download** from repositories
-- **Modern web interface** with dark theme
-- **Multi-language support** (12 languages)
-- **Unlocked games history** with depot and tool information
-
-### Requirements
-
-| Requirement | Description | Link |
-|-------------|-------------|------|
-| **SteamTools** | Required for SteamTools mode | [steamtools.net](https://steamtools.net/) |
-| **Steam** | Installed Steam client | [store.steampowered.com](https://store.steampowered.com/) |
-| **Python** | Installed current version of Python | [python.org](https://www.python.org/downloads/) |
+| Язык | Файл |
+|------|------|
+| Русский | [docs/README.ru.md](docs/README.ru.md) |
+| English | [docs/README.md](docs/README.md) |
+| Français | [docs/README.fr.md](docs/README.fr.md) |
+| Español | [docs/README.es.md](docs/README.es.md) |
+| Deutsch | [docs/README.de.md](docs/README.de.md) |
+| Italiano | [docs/README.it.md](docs/README.it.md) |
+| Polski | [docs/README.pl.md](docs/README.pl.md) |
+| Português | [docs/README.pt.md](docs/README.pt.md) |
+| 日本語 | [docs/README.ja.md](docs/README.ja.md) |
+| 한국어 | [docs/README.ko.md](docs/README.ko.md) |
+| 中文 | [docs/README.zh.md](docs/README.zh.md) |
+| हिन्दी | [docs/README.hi.md](docs/README.hi.md) |
 
 ---
 
-## 🚀 Quick Start
+## О проекте
 
-### 1. Clone the repository
+**Shadow Library** — это программное решение, расширяющее возможности пользователей Steam за счёт альтернативных методов активации игр. Приложение предоставляет удобный веб-интерфейс для управления разблокировкой игр через популярные инструменты: **[SteamTools](https://steamtools.net/)** и **GreenLuma**.
+
+### Возможности
+
+- Два режима работы: SteamTools и GreenLuma
+- Несколько источников манифестов: SteamAutoCrack/ManifestHub и ManifestAutoUpdate
+- Автоматическая загрузка манифестов из репозиториев
+- Современный веб-интерфейс с тёмной темой
+- Поддержка нескольких языков (12 языков)
+- История разблокированных игр с информацией о депотах и инструментах
+
+### Требования
+
+| Требование | Описание | Ссылка |
+|------------|----------|--------|
+| SteamTools | Требуется для режима SteamTools | [steamtools.net](https://steamtools.net/) |
+| Steam | Установленный клиент Steam | [store.steampowered.com](https://store.steampowered.com/) |
+| Python | Установленная актуальная версия Python | [python.org](https://www.python.org/downloads/) |
+
+---
+
+## Быстрый старт
+
+### 1. Клонирование репозитория
 
 ```bash
 git clone https://github.com/BORGERone/ShadowLibrary.git
 cd ShadowLibrary
 ```
 
-### 2. Install dependencies
+### 2. Установка зависимостей
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run the application
+### 3. Запуск приложения
 
 ```bash
 python web_server.py
 ```
 
-### 4. Open in browser
+### 4. Открыть в браузере
 
 ```
 http://localhost:8000
 ```
 
-Or run the ready-made executable from the `dist/` folder.
+Или запустите готовый исполняемый файл из папки `dist/`.
 
 ---
 
-## 📁 Project Structure
+## Структура проекта
 
 ```
 Shadow Library/
-├── docs/                  # Documentation in multiple languages
+├── docs/                  # Документация на нескольких языках
 │   ├── README.md          # English
 │   ├── README.ru.md       # Русский
 │   ├── README.fr.md       # Français
 │   └── ...
-├── common/                # Common modules
+├── common/                # Общие модули
 │   ├── log.py
 │   └── variable.py
-├── templates/             # Web interface templates
+├── templates/             # Шаблоны веб-интерфейса
 │   └── index.html
-├── locales/               # Translation files
+├── locales/               # Файлы переводов
 │   ├── en.json
 │   ├── ru.json
 │   └── ...
-├── web_server.py          # Web server (FastAPI)
-├── app_window.py          # Desktop application (PyQt)
-├── run_server.py          # Server runner script
-├── requirements.txt       # Python dependencies
-├── LICENSE                # License file
-└── README.md              # This file
+├── web_server.py          # Веб-сервер (FastAPI)
+├── app_window.py          # Десктопное приложение (PyQt)
+├── run_server.py          # Скрипт запуска сервера
+├── requirements.txt       # Зависимости Python
+├── LICENSE                # Файл лицензии
+└── README.md              # Этот файл
 ```
 
 ---
 
-## ⚠️ Limitations
+## Ограничения
 
-| Limitation | Description |
-|------------|-------------|
-| **Denuvo** | Games can be downloaded, but Denuvo protection will prevent launch |
-| **Online Games** | Multiplayer functionality is limited |
-| **Third-party Launchers** | Games requiring `EA App`, `Ubisoft Connect`, `Battle.net` are mostly not supported |
-
----
-
-## 📜 Disclaimer
-
-> **Warning**
->
-> This project is intended exclusively for **educational and research purposes**.
->
-> Authors bear no responsibility for any consequences of using this software.
-> Use at **your own risk**.
+| Ограничение | Описание |
+|-------------|----------|
+| Denuvo | Игры можно загрузить, но защита Denuvo предотвратит запуск |
+| Онлайн игры | Функциональность многопользовательских игр ограничена |
+| Сторонние лаунчеры | Игры, требующие EA App, Ubisoft Connect, Battle.net, в большинстве случаев не поддерживаются |
 
 ---
 
-## 📞 Contacts
+## Дисклеймер
 
-| Resource | Link |
-|----------|------|
-| **GitHub** | [BORGERone/ShadowLibrary](https://github.com/BORGERone/ShadowLibrary) |
-| **Author** | BORGER |
+> Данный проект предназначен исключительно для образовательных и исследовательских целей.
+>
+> Авторы не несут ответственности за любые последствия использования этого программного обеспечения.
+> Использование осуществляется на ваш собственный страх и риск.
+
+---
+
+## Контакты
+
+| Ресурс | Ссылка |
+|--------|--------|
+| GitHub | [BORGERone/ShadowLibrary](https://github.com/BORGERone/ShadowLibrary) |
+| Автор | BORGER |
 
 ---
 
 <p align="center">
-  <strong>Shadow Library</strong> | Created with Python and FastAPI
+  <strong>Shadow Library</strong> | Создано с помощью Python и FastAPI
 </p>
