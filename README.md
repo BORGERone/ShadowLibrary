@@ -1,17 +1,19 @@
-<!-- Флаги для выбора языка -->
+<!-- Language Flags -->
 <p align="center">
-  <a href="docs/README.ru.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" alt="Russian" width="30"/></a>
-  <a href="docs/README.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="English" width="30"/></a>
-  <a href="docs/README.fr.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/40px-Flag_of_France.svg.png" alt="French" width="30"/></a>
-  <a href="docs/README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Spain.svg/1200px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/></a>
-  <a href="docs/README.de.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" alt="German" width="30"/></a>
-  <a href="docs/README.it.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1200px-Flag_of_Italy.svg.png" alt="Italian" width="30"/></a>
-  <a href="docs/README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" alt="Polish" width="30"/></a>
-  <a href="docs/README.pt.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png" alt="Portuguese" width="30"/></a>
-  <a href="docs/README.ja.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png" alt="Japanese" width="30"/></a>
-  <a href="docs/README.ko.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1200px-Flag_of_South_Korea.svg.png" alt="Korean" width="30"/></a>
-  <a href="docs/README.zh.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1200px-Flag_of_the_People%27s_Republic_of_China.svg.png" alt="Chinese" width="30"/></a>
-  <a href="docs/README.hi.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png" alt="Hindi" width="30"/></a>
+  <a href="docs/README.ru.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" alt="Russian" width="30"/> Русский</a> &nbsp;&nbsp;
+  <a href="docs/README.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="English" width="30"/> English</a> &nbsp;&nbsp;
+  <a href="docs/README.fr.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/40px-Flag_of_France.svg.png" alt="French" width="30"/> Français</a> &nbsp;&nbsp;
+  <a href="docs/README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Spain.svg/1200px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/> Español</a> &nbsp;&nbsp;
+  <a href="docs/README.de.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" alt="German" width="30"/> Deutsch</a> &nbsp;&nbsp;
+  <a href="docs/README.it.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1200px-Flag_of_Italy.svg.png" alt="Italian" width="30"/> Italiano</a>
+</p>
+<p align="center">
+  <a href="docs/README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" alt="Polish" width="30"/> Polski</a> &nbsp;&nbsp;
+  <a href="docs/README.pt.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png" alt="Portuguese" width="30"/> Português</a> &nbsp;&nbsp;
+  <a href="docs/README.ja.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png" alt="Japanese" width="30"/> 日本語</a> &nbsp;&nbsp;
+  <a href="docs/README.ko.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1200px-Flag_of_South_Korea.svg.png" alt="Korean" width="30"/> 한국어</a> &nbsp;&nbsp;
+  <a href="docs/README.zh.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1200px-Flag_of_the_People%27s_Republic_of_China.svg.png" alt="Chinese" width="30"/> 中文</a> &nbsp;&nbsp;
+  <a href="docs/README.hi.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png" alt="Hindi" width="30"/> हिन्दी</a>
 </p>
 
 <h1 align="center">
@@ -19,7 +21,7 @@
 </h1>
 
 <p align="center">
-  <strong>Инструмент для разблокировки игр в Steam</strong>
+  <strong>Steam Game Unlock Tool</strong>
 </p>
 
 <p align="center">
@@ -39,139 +41,152 @@
 
 ---
 
-## Документация
+## Description
 
-Полная документация доступна на нескольких языках. Выберите язык выше или перейдите в папку **[docs/](docs/)**.
-
-### Быстрые ссылки
-
-| Язык | Файл |
-|------|------|
-| Русский | [docs/README.ru.md](docs/README.ru.md) |
-| English | [docs/README.md](docs/README.md) |
-| Français | [docs/README.fr.md](docs/README.fr.md) |
-| Español | [docs/README.es.md](docs/README.es.md) |
-| Deutsch | [docs/README.de.md](docs/README.de.md) |
-| Italiano | [docs/README.it.md](docs/README.it.md) |
-| Polski | [docs/README.pl.md](docs/README.pl.md) |
-| Português | [docs/README.pt.md](docs/README.pt.md) |
-| 日本語 | [docs/README.ja.md](docs/README.ja.md) |
-| 한국어 | [docs/README.ko.md](docs/README.ko.md) |
-| 中文 | [docs/README.zh.md](docs/README.zh.md) |
-| हिन्दी | [docs/README.hi.md](docs/README.hi.md) |
+**Shadow Library** is a software solution that expands Steam users' capabilities through alternative game activation methods. The application provides a convenient web interface for managing game unlocks through popular tools: **[SteamTools](https://steamtools.net/)** and **GreenLuma**.
 
 ---
 
-## О проекте
+## Features
 
-**Shadow Library** — это программное решение, расширяющее возможности пользователей Steam за счёт альтернативных методов активации игр. Приложение предоставляет удобный веб-интерфейс для управления разблокировкой игр через популярные инструменты: **[SteamTools](https://steamtools.net/)** и **GreenLuma**.
+### Operation Modes
 
-### Возможности
+| Mode | Description |
+|------|-------------|
+| **[SteamTools](https://steamtools.net/)** | Popular tool for unlocking games through license emulation. Download [SteamTools](https://steamtools.net/) from the [official](https://steamtools.net/) website |
+| **GreenLuma** | Alternative solution for bypassing Steam checks |
 
-- Два режима работы: SteamTools и GreenLuma
-- Несколько источников манифестов: SteamAutoCrack/ManifestHub и ManifestAutoUpdate
-- Автоматическая загрузка манифестов из репозиториев
-- Современный веб-интерфейс с тёмной темой
-- Поддержка нескольких языков (12 языков)
-- История разблокированных игр с информацией о депотах и инструментах
+### Manifest Sources
 
-### Требования
+| Source | Description |
+|--------|-------------|
+| **SteamAutoCrack / ManifestHub** | Actual manifests with automatic updates |
+| **ManifestAutoUpdate** | Alternative manifest source |
 
-| Требование | Описание | Ссылка |
-|------------|----------|--------|
-| SteamTools | Требуется для режима SteamTools | [steamtools.net](https://steamtools.net/) |
-| Steam | Установленный клиент Steam | [store.steampowered.com](https://store.steampowered.com/) |
-| Python | Установленная актуальная версия Python | [python.org](https://www.python.org/downloads/) |
+### Advantages
 
----
-
-## Быстрый старт
-
-### 1. Клонирование репозитория
-
-```bash
-git clone https://github.com/BORGERone/ShadowLibrary.git
-cd ShadowLibrary
-```
-
-### 2. Установка зависимостей
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Запуск приложения
-
-```bash
-python web_server.py
-```
-
-### 4. Открыть в браузере
-
-```
-http://localhost:8000
-```
-
-Или запустите готовый исполняемый файл из папки `dist/`.
+- Automatic manifest download from repositories
+- Unlock file configuration without manual intervention
+- Modern web interface with dark theme
+- Multi-language support (Russian, English, Chinese, and more)
+- History of unlocked games with depot and tool information
 
 ---
 
-## Структура проекта
+## Requirements
 
-```
-Shadow Library/
-├── docs/                  # Документация на нескольких языках
-│   ├── README.md          # English
-│   ├── README.ru.md       # Русский
-│   ├── README.fr.md       # Français
-│   └── ...
-├── common/                # Общие модули
-│   ├── log.py
-│   └── variable.py
-├── templates/             # Шаблоны веб-интерфейса
-│   └── index.html
-├── locales/               # Файлы переводов
-│   ├── en.json
-│   ├── ru.json
-│   └── ...
-├── web_server.py          # Веб-сервер (FastAPI)
-├── app_window.py          # Десктопное приложение (PyQt)
-├── run_server.py          # Скрипт запуска сервера
-├── requirements.txt       # Зависимости Python
-├── LICENSE                # Файл лицензии
-└── README.md              # Этот файл
-```
+Before starting, make sure the following programs are installed:
+
+| Requirement | Description | Link |
+|-------------|-------------|------|
+| **SteamTools** | Required for SteamTools mode | [steamtools.net](https://steamtools.net/) |
+| **Steam** | Installed Steam client | [store.steampowered.com](https://store.steampowered.com/) |
+| **Python** | Installed current version of Python | [python.org](https://www.python.org/downloads/) |
+
+### Installing SteamTools
+
+1. Visit the official website: **[SteamTools](https://steamtools.net/)**
+2. Download and install the latest version of the program
 
 ---
 
-## Ограничения
+## Usage Instructions
 
-| Ограничение | Описание |
-|-------------|----------|
-| Denuvo | Игры можно загрузить, но защита Denuvo предотвратит запуск |
-| Онлайн игры | Функциональность многопользовательских игр ограничена |
-| Сторонние лаунчеры | Игры, требующие EA App, Ubisoft Connect, Battle.net, в большинстве случаев не поддерживаются |
+### Initial Setup
+
+**<u>Don't forget to check if you have</u>** **[<u>SteamTools</u>](https://steamtools.net/)** <u>installed, otherwise only GreenLuma crack will work</u>
+
+1. On first launch, open the **"Steam Path"** menu in the top right corner
+2. Specify the path to the root Steam folder (where `steam.exe` is located)
+3. Click **"Save"**
+
+### Unlocking a Game
+
+#### Step 1. Enter Game Identifier
+
+In the input field, specify:
+- **AppID** of the game (numeric value, e.g., `2486820`)
+- Or **full link** to the game page in Steam
+
+#### Step 2. Select Unlock Tool
+
+| Tool | Description |
+|------|-------------|
+| **SteamTools** | Recommended for most games. Creates Lua script in `config/stplug-in` folder |
+| **GreenLuma** | Alternative method. Modifies `config.vdf` and creates files in `AppList` |
+
+#### Step 3. Select Manifest Source
+
+| Source | Description |
+|--------|-------------|
+| **SteamAutoCrack** | Actual manifests from ManifestHub repository |
+| **ManifestAutoUpdate** | Alternative manifest source |
+
+#### Step 4. Launch
+
+Click the **"Unlock Game"** button
+
+After successful processing, the game will appear in the list of unlocked games.
+
+### Managing Unlocked Games
+
+| Action | Description |
+|--------|-------------|
+| **View List** | All unlocked games are displayed at the bottom of the page |
+| **Delete** | Click "Delete" to rollback changes and remove entry from database |
 
 ---
 
-## Дисклеймер
+## Limitations and Compatibility
 
-> Данный проект предназначен исключительно для образовательных и исследовательских целей.
+### Supported Games
+
+- Single-player games with Steam DRM protection
+- Games with depots and manifests in public access
+
+### Limitations
+
+| Limitation | Description |
+|------------|-------------|
+| **Denuvo** | Games can be downloaded through Shadow Library, but Denuvo protection will prevent launch — additional unlock or bypass required |
+| **Online Games** | Multiplayer functionality is limited. Online may work if license is available through Family Sharing, but not always |
+| **Third-party Launchers** | Games requiring additional launchers (`EA App`, `Ubisoft Connect`, `Battle.net`) are mostly not supported |
+
+### Denuvo Workarounds
+
+1. Launch the legitimate version of the game on your computer — this allows Denuvo to authorize the device, after which you can use the cracked version through Shadow Library
+2. Using hypervisor bypasses (requires additional tools)
+
+---
+
+## Disclaimer
+
+> **Warning**
 >
-> Авторы не несут ответственности за любые последствия использования этого программного обеспечения.
-> Использование осуществляется на ваш собственный страх и риск.
+> This project is intended exclusively for **educational and research purposes**.
+>
+> Authors bear no responsibility for any consequences of using this software.
+> Use at **your own risk**.
+>
+> It is recommended to purchase games in official stores to support developers.
 
 ---
 
-## Контакты
+## License
 
-| Ресурс | Ссылка |
-|--------|--------|
-| GitHub | [BORGERone/ShadowLibrary](https://github.com/BORGERone/ShadowLibrary) |
-| Автор | BORGER |
+The project is distributed without an explicit license. All rights reserved.
+
+---
+
+## Contacts
+
+| Resource | Link |
+|----------|------|
+| **GitHub** | [BORGERone/ShadowLibrary](https://github.com/BORGERone/ShadowLibrary) |
+| **Author** | BORGER |
 
 ---
 
 <p align="center">
-  <strong>Shadow Library</strong> | Создано с помощью Python и FastAPI
+  <strong>Shadow Library</strong> | Created with Python and FastAPI
 </p>
