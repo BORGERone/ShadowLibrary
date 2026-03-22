@@ -1,0 +1,9 @@
+httpx
+logzero
+ujson
+vdf
+fastapi
+uvicorn
+jinja2
+pydantic
+pywebview

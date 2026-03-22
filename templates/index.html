@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow Library</title>
+    <link rel="icon" type="image/x-icon" href="/files/icon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #00ff99;
+            --neon-blue: #00f0ff;
+            --neon-cyan: #00e5ff;
+            --neon-purple: #d99bff;
+            --neon-pink: #ff85d4;
+            --neon-yellow: #ffd740;
+            --dark-bg: #0a0a0b;
+            --card-bg: #050507;
+            --card-border: #1a1a1f;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--neon-blue) var(--dark-bg);
+        }
+
+        *::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+            border-radius: 4px;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(0, 229, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(192, 132, 252, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 255, 136, 0.04) 0%, transparent 50%),
+                var(--dark-bg);
+            min-height: 100vh;
+        }
+
+        .gamer-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(224, 231, 255, 0.85) 35%, rgba(243, 232, 255, 0.75) 60%, rgba(120, 120, 120, 0.4) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gamer-title-accent {
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gamer-card {
+            background: linear-gradient(135deg, rgba(5, 5, 7, 0.98) 0%, rgba(3, 3, 5, 1) 100%);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gamer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), var(--neon-green), transparent);
+            background-size: 200% 100%;
+            animation: gradient-shift 8s ease infinite;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+        }
+
+        @keyframes gradient-shift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .gamer-input {
+            background: linear-gradient(135deg, rgba(20, 20, 25, 0.8) 0%, rgba(10, 10, 12, 0.9) 100%);
+            border: 1px solid #3a3a45;
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+            color: #f3f4f6;
+        }
+
+        .gamer-input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.3);
+            outline: none;
+        }
+
+        .gamer-input:disabled {
+            background: linear-gradient(135deg, rgba(15, 15, 18, 0.5) 0%, rgba(10, 10, 12, 0.6) 100%);
+            cursor: not-allowed;
+            color: #52525b;
+        }
+
+        /* Стили для select и option - тёмный фон */
+        select.gamer-input {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+        }
+
+        select.gamer-input option {
+            background: #141419;
+            color: #f3f4f6;
+            padding: 8px;
+        }
+
+        .gamer-btn-primary {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(217, 155, 255, 0.18) 100%);
+            border: 1px solid #4a4a55;
+            color: #ecfeff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gamer-btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .gamer-btn-primary:hover {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.35) 0%, rgba(217, 155, 255, 0.28) 100%);
+            border-color: var(--neon-blue);
+            color: #ffffff;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.5), 0 0 70px rgba(217, 155, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .gamer-btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .gamer-btn-secondary {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.18) 0%, rgba(217, 155, 255, 0.12) 100%);
+            border: 1px solid #4a4a55;
+            color: #ecfeff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            transition: all 0.25s ease;
+        }
+
+        .gamer-btn-secondary:hover {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.28) 0%, rgba(217, 155, 255, 0.2) 100%);
+            border-color: var(--neon-purple);
+            color: #ffffff;
+            box-shadow: 0 0 25px rgba(217, 155, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .gamer-btn-danger {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 150, 150, 0.15) 100%);
+            border: 1px solid #4a4a55;
+            color: #fecaca;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .gamer-btn-danger:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.35) 0%, rgba(255, 150, 150, 0.25) 100%);
+            border-color: #ff6b6b;
+            color: #ffffff;
+            box-shadow: 0 0 35px rgba(255, 107, 107, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .section-accent {
+            background: linear-gradient(0deg,
+                    var(--neon-blue) 0%,
+                    var(--neon-purple) 30%,
+                    var(--neon-green) 60%,
+                    var(--neon-pink) 80%,
+                    var(--neon-blue) 100%);
+            background-size: 100% 300%;
+            animation: accent-flow 2s linear infinite;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.9), 0 0 60px rgba(217, 155, 255, 0.5);
+            filter: brightness(1.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-accent::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            filter: blur(3px);
+            opacity: 0.8;
+        }
+
+        @keyframes accent-flow {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 0% 100%;
+            }
+        }
+
+        .mono-glow {
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-weight: 500;
+        }
+
+        .header-chip {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-blue) 50%, var(--neon-purple) 100%);
+            background-size: 300% 300%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.8));
+            animation: chip-glow 5s ease-in-out infinite, chip-gradient 8s ease infinite;
+        }
+
+        .header-chip svg {
+            width: 36px;
+            height: 36px;
+            color: #ffffff;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+        }
+
+        @keyframes chip-glow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.5));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 18px rgba(0, 255, 136, 0.8));
+            }
+        }
+
+        @keyframes chip-gradient {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .gear-spinning {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 50%, var(--neon-blue) 100%);
+            background-size: 300% 300%;
+            animation: gear-gradient 8s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.8));
+        }
+
+        .gear-spinning svg {
+            width: 28px;
+            height: 28px;
+            color: #ffffff;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+        }
+
+        @keyframes gear-gradient {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            appearance: none;
+            background: #3a3a45;
+            border-radius: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch:checked {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 24px;
+            height: 24px;
+            background: #ffffff;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch:checked::after {
+            left: 32px;
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(0, 240, 255, 0.1);
+            border-top: 3px solid var(--neon-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--neon-green);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .status-error {
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--neon-green);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Скрываем элементы с data-i18n до загрузки JavaScript */
+        [data-i18n] {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Показываем элементы после загрузки */
+        body.loaded [data-i18n] {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="text-gray-300 min-h-screen p-4 md:p-8">
+    <!-- Фоновые элементы -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div
+            class="absolute top-0 left-1/4 w-[700px] h-[700px] bg-cyan-900 rounded-full mix-blend-multiply filter blur-[140px] opacity-[0.05] float-animation">
+        </div>
+        <div class="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-violet-900 rounded-full mix-blend-multiply filter blur-[140px] opacity-[0.04] float-animation"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-emerald-900 rounded-full mix-blend-multiply filter blur-[140px] opacity-[0.03] float-animation"
+            style="animation-delay: 4s;"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto relative z-10">
+        <!-- Header -->
+        <header class="mb-12 flex items-center justify-between border-b border-gray-800 pb-6 flex-wrap gap-4">
+            <div class="flex items-center gap-3">
+                <div class="header-chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z">
+                        </path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold gamer-title tracking-tight">
+                    <span class="block text-xs font-medium text-gray-500 tracking-[0.25em] uppercase mb-1">by
+                        BORGER</span>
+                    SHADOW LIBRARY
+                </h1>
+            </div>
+            <div class="flex gap-3 flex-wrap items-center">
+                <button onclick="document.getElementById('steamPathModal').classList.remove('hidden')"
+                    class="gamer-btn-secondary px-5 py-2.5 rounded-lg text-sm uppercase tracking-wide"
+                    data-i18n="steamPath">
+                    Путь к Steam
+                </button>
+                <!-- Выпадающий список языков -->
+                <div class="flex items-center gap-2">
+                    <label class="text-gray-400 text-sm uppercase tracking-wide" data-i18n="language">Language</label>
+                    <div class="relative">
+                        <select id="languageSelect" onchange="changeLanguage(this.value)"
+                            class="gamer-input px-4 py-2.5 rounded-lg text-sm uppercase tracking-wide cursor-pointer min-w-[140px] appearance-none pr-10">
+                            <option value="en">English</option>
+                            <option value="ru">Русский</option>
+                            <option value="zh">中文</option>
+                            <option value="es">Español</option>
+                            <option value="de">Deutsch</option>
+                            <option value="fr">Français</option>
+                            <option value="ja">日本語</option>
+                            <option value="ko">한국어</option>
+                            <option value="pt">Português</option>
+                            <option value="it">Italiano</option>
+                            <option value="pl">Polski</option>
+                            <option value="hi">हिन्दी</option>
+                        </select>
+                        <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Модальное окно пути к Steam -->
+        <div id="steamPathModal"
+            class="hidden fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50">
+            <div class="gamer-card p-8 rounded-xl max-w-md w-full mx-4">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="gear-spinning">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-200" data-i18n="steamPath">Путь к Steam</h2>
+                </div>
+                <p class="text-gray-500 text-sm mb-6" data-i18n="enterPath">Укажите корневую папку Steam (где лежит
+                    steam.exe)</p>
+                <input type="text" id="steamPathInput" placeholder="C:\\Program Files (x86)\\Steam"
+                    data-i18n-placeholder="enterPath"
+                    class="gamer-input w-full p-4 rounded-xl mb-6 font-mono text-sm text-gray-300 placeholder-gray-600">
+                <div class="flex gap-3">
+                    <button onclick="saveSteamPath()"
+                        class="flex-1 gamer-btn-primary font-semibold py-3 px-4 rounded-xl uppercase tracking-wide text-xs"
+                        data-i18n="save">
+                        Сохранить
+                    </button>
+                    <button onclick="document.getElementById('steamPathModal').classList.add('hidden')"
+                        class="flex-1 bg-gray-900/50 hover:bg-gray-900 text-gray-500 hover:text-gray-400 font-medium py-3 px-4 rounded-xl transition border border-gray-800"
+                        data-i18n="close">
+                        Закрыть
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основная форма -->
+        <div class="gamer-card p-8 md:p-10 rounded-xl mb-10">
+            <h2 class="text-2xl font-semibold mb-8 flex items-center gap-4">
+                <div class="section-accent w-1 h-8 rounded-sm"></div>
+                <span class="text-gray-200" data-i18n="addGame">Разблокировать игру</span>
+            </h2>
+
+            <form id="unlockForm" class="space-y-8">
+                <!-- App ID -->
+                <div>
+                    <label class="block text-gray-500 text-sm font-medium mb-3 uppercase tracking-wide text-xs"
+                        data-i18n="appId">App ID игры</label>
+                    <input name="app_id" id="app_id" type="text" inputmode="numeric" placeholder="2486820" required
+                        class="gamer-input w-full p-4 rounded-xl text-app placeholder-gray-600 mono-glow text-lg">
+                    <p class="text-gray-600 text-xs mt-2" data-i18n="findAppId"></p>
+                </div>
+
+                <!-- Переключатели -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- SteamTools / GreenLuma -->
+                    <div class="gamer-card p-6 rounded-xl border border-gray-800">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                                </svg>
+                                <span class="text-gray-200 font-medium" data-i18n="unlockTool">Инструмент
+                                    разблокировки</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs text-gray-500" id="toolLabel"
+                                    data-i18n="steamTools">SteamTools</span>
+                                <input type="checkbox" id="use_steamtools" class="toggle-switch" checked
+                                    onchange="updateToolLabel()">
+                            </div>
+                        </div>
+                        <p class="text-gray-500 text-xs">
+                            <span id="toolDesc" data-i18n="steamToolsDesc">SteamTools (Steam++): популярный инструмент
+                                для разблокировки игр</span>
+                        </p>
+                    </div>
+
+                    <!-- SteamAutoCrack / ManifestHub -->
+                    <div class="gamer-card p-6 rounded-xl border border-gray-800">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                                <span class="text-gray-200 font-medium" data-i18n="manifestSource">Источник
+                                    манифестов</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs text-gray-500" id="sourceLabel"
+                                    data-i18n="steamAutoCrack">SteamAutoCrack</span>
+                                <input type="checkbox" id="use_autocrack" class="toggle-switch" checked
+                                    onchange="updateSourceLabel()">
+                            </div>
+                        </div>
+                        <p class="text-gray-500 text-xs">
+                            <span id="sourceDesc" data-i18n="steamAutoCrackDesc">SteamAutoCrack/ManifestHub: актуальные
+                                манифесты</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Версионный лок -->
+                <div class="flex items-center gap-4 p-4 rounded-xl border border-gray-800 bg-gray-900/30">
+                    <input type="checkbox" id="version_lock" class="toggle-switch">
+                    <div>
+                        <label for="version_lock" class="text-gray-200 font-medium cursor-pointer"
+                            data-i18n="versionLock">Заблокировать версию</label>
+                        <p class="text-gray-500 text-xs mt-1" data-i18n="versionLockDesc">Рекомендуется при
+                            использовании SteamAutoCrack/ManifestHub</p>
+                    </div>
+                </div>
+
+                <!-- Кнопка -->
+                <button type="submit" id="submitBtn"
+                    class="w-full gamer-btn-primary font-semibold py-4 px-6 rounded-xl uppercase tracking-wide text-base flex items-center justify-center gap-3">
+                    <span data-i18n="unlockBtn">Разблокировать игру</span>
+                </button>
+            </form>
+
+            <!-- Результат -->
+            <div id="result" class="hidden mt-8 p-6 rounded-xl border border-gray-800 bg-gray-900/50">
+                <div id="resultContent"></div>
+            </div>
+        </div>
+
+        <!-- Список взломанных игр -->
+        <div class="gamer-card p-8 md:p-10 rounded-xl mb-10">
+            <h2 class="text-2xl font-semibold mb-8 flex items-center gap-4">
+                <div class="section-accent w-1 h-8 rounded-sm"></div>
+                <span class="text-gray-200" data-i18n="crackedGames">Список взломанных игр</span>
+            </h2>
+
+            <div id="gamesList" class="space-y-4">
+                <!-- Заполняется JavaScript -->
+            </div>
+        </div>
+
+        <!-- Конфигурация -->
+        <div class="gamer-card p-8 md:p-10 rounded-xl mb-10">
+            <h2 class="text-2xl font-semibold mb-8 flex items-center gap-4">
+                <div class="section-accent w-1 h-8 rounded-sm"></div>
+                <span class="text-gray-200" data-i18n="configuration">Конфигурация</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 rounded-xl border border-gray-800 bg-gray-900/30">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                        <span class="text-gray-200 font-medium" data-i18n="githubApiStatus">Статус API GitHub</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="pulse-dot"></div>
+                        <span class="text-gray-400 text-sm" id="apiStatus">Проверка...</span>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-xl border border-gray-800 bg-gray-900/30">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                        </svg>
+                        <span class="text-gray-200 font-medium" data-i18n="steamPathConfig">Путь к Steam</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mono-glow truncate" id="configSteamPath" data-i18n="notConfigured">
+                        Не настроен</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-600 text-sm py-8 border-t border-gray-800">
+            <p data-i18n="footer">Shadow Library | Автор: BORGER | Версия: 1.0.0</p>
+            <p class="mt-2">
+                <a href="https://github.com/BORGERone/ShadowLibrary" target="_blank"
+                    class="text-cyan-400 underline hover:text-cyan-300" data-i18n="github">GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Обновление меток переключателей
+        function updateToolLabel() {
+            const checkbox = document.getElementById('use_steamtools');
+            const label = document.getElementById('toolLabel');
+            const desc = document.getElementById('toolDesc');
+            if (!checkbox || !label || !desc) return;
+
+            const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
+            const t = translations[currentLang] || translations.en || {};
+
+            if (checkbox.checked) {
+                label.textContent = t.steamTools || 'SteamTools';
+                desc.textContent = t.steamToolsDesc || 'SteamTools (Steam++): popular tool for unlocking games';
+            } else {
+                label.textContent = t.greenLuma || 'GreenLuma';
+                desc.textContent = t.greenLumaDesc || 'GreenLuma: alternative tool for unlocking';
+            }
+        }
+
+        function updateSourceLabel() {
+            const checkbox = document.getElementById('use_autocrack');
+            const label = document.getElementById('sourceLabel');
+            const desc = document.getElementById('sourceDesc');
+            if (!checkbox || !label || !desc) return;
+
+            const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
+            const t = translations[currentLang] || translations.en || {};
+
+            if (checkbox.checked) {
+                label.textContent = t.steamAutoCrack || 'SteamAutoCrack';
+                desc.textContent = t.steamAutoCrackDesc || 'SteamAutoCrack/ManifestHub: actual manifests';
+            } else {
+                label.textContent = t.manifestAutoUpdate || 'ManifestAutoUpdate';
+                desc.textContent = t.manifestAutoUpdateDesc || 'ManifestAutoUpdate: alternative manifest source';
+            }
+        }
+
+        // Загрузка пути к Steam
+        async function loadSteamPath() {
+            try {
+                const res = await fetch('/get_steam_path?t=' + Date.now());
+                const data = await res.json();
+                console.log('[SteamPath] Received:', data);
+                if (data.steam_path) {
+                    const inputEl = document.getElementById('steamPathInput');
+                    const configEl = document.getElementById('configSteamPath');
+                    if (inputEl) inputEl.value = data.steam_path;
+                    if (configEl) {
+                        configEl.textContent = data.steam_path;
+                        configEl.removeAttribute('data-i18n'); // Убираем data-i18n, чтобы перевод не перезаписывал значение
+                    }
+                    console.log('[SteamPath] Set to:', data.steam_path);
+                } else {
+                    console.log('[SteamPath] No steam_path in response');
+                }
+            } catch (e) {
+                console.error('Ошибка загрузки пути:', e);
+            }
+        }
+
+        // Сохранение пути к Steam
+        async function saveSteamPath() {
+            const path = document.getElementById('steamPathInput').value.trim();
+            if (!path) {
+                alert('Введите путь к Steam');
+                return;
+            }
+            try {
+                const res = await fetch('/set_steam_path', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ steam_path: path })
+                });
+                const data = await res.json();
+                if (data.error) {
+                    alert('Ошибка: ' + data.error);
+                } else {
+                    alert('✅ Путь сохранён: ' + data.steam_path);
+                    document.getElementById('configSteamPath').textContent = data.steam_path;
+                    document.getElementById('steamPathModal').classList.add('hidden');
+                }
+            } catch (e) {
+                alert('Ошибка сети: ' + e);
+            }
+        }
+
+        // Открытие папок
+        async function openPath(target) {
+            try {
+                const res = await fetch('/open_local', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target: target })
+                });
+                const data = await res.json();
+                if (data.error) {
+                    alert('Ошибка: ' + data.error);
+                }
+            } catch (e) {
+                alert('Ошибка сети: ' + e);
+            }
+        }
+
+        // Проверка API GitHub
+        async function checkApiStatus() {
+            try {
+                const res = await fetch('https://api.github.com/rate_limit');
+                const data = await res.json();
+                const remaining = data.rate.remaining;
+                const reset = new Date(data.rate.reset * 1000).toLocaleTimeString();
+
+                const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
+                const t = translations[currentLang] || translations.en || {};
+
+                if (remaining > 0) {
+                    document.getElementById('apiStatus').innerHTML =
+                        `<span class="text-green-400">${t.working}</span> | ${t.requestsLeft}: ${remaining} | ${t.reset}: ${reset}`;
+                } else {
+                    document.getElementById('apiStatus').innerHTML =
+                        `<span class="text-yellow-400">${t.limitExhausted}</span> | ${t.reset}: ${reset}`;
+                }
+            } catch (e) {
+                const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
+                const t = translations[currentLang] || translations.en || {};
+                document.getElementById('apiStatus').textContent = t.errorCheck;
+            }
+        }
+
+        // Загрузка списка игр
+        async function loadGamesList() {
+            try {
+                const res = await fetch('/api/games');
+                const games = await res.json();
+
+                const container = document.getElementById('gamesList');
+
+                if (games.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500 text-center py-8">Пока нет взломанных игр</p>';
+                    return;
+                }
+
+                container.innerHTML = games.map(game => `
+                    <div class="gamer-card p-0 rounded-xl border border-gray-800 overflow-hidden relative">
+                        <!-- Фоновое изображение игры -->
+                        ${game.game_icon
+                        ? `<div class="absolute inset-0 w-full h-full">
+                                    <img src="${game.game_icon}" alt="${game.game_name}" class="w-full h-full object-cover opacity-60" onerror="this.style.display='none'" />
+                                    <!-- Градиенты для затемнения краев -->
+                                    <div class="absolute inset-0 bg-gradient-to-r from-[#050507]/80 via-[#050507]/20 to-[#050507]"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/50"></div>
+                               </div>`
+                        : `<div class="absolute inset-0 bg-gradient-to-br from-cyan-900/20 via-[#050507] to-purple-900/20"></div>`
+                    }
+                        
+                        <!-- Контент -->
+                        <div class="relative z-10 p-6 flex items-center justify-between flex-wrap gap-4">
+                            <div class="flex items-center gap-4">
+                                <div>
+                                    <h3 class="text-gray-200 font-semibold text-lg drop-shadow-lg">${game.game_name || 'Неизвестно'}</h3>
+                                    <p class="text-gray-400 text-sm mono-glow drop-shadow">App ID: ${game.app_id}</p>
+                                    <div class="flex items-center gap-3 mt-2">
+                                        <span class="status-badge status-success" style="backdrop-filter: blur(8px);">
+                                            <span class="pulse-dot" style="width: 6px; height: 6px;"></span>
+                                            ${game.depot_count} Depot
+                                        </span>
+                                        <span class="text-xs text-gray-400">${game.tool}</span>
+                                        <span class="text-xs text-gray-500">•</span>
+                                        <span class="text-xs text-gray-400">${game.source}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="text-gray-500 text-sm">${game.timestamp}</span>
+                                <button onclick="deleteGame('${game.app_id}')" class="gamer-btn-danger px-4 py-2 rounded-lg text-sm" style="position: relative; z-index: 10;" data-i18n="delete">
+                                    Удалить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Применяем переводы к новым элементам
+                const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
+                applyTranslations(currentLang);
+            } catch (e) {
+                console.error('Ошибка загрузки списка игр:', e);
+            }
+        }
+
+        // Удаление игры
+        async function deleteGame(appId) {
+            const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
+            const t = translations[currentLang] || translations.en || {};
+            const confirmText = (t.deleteConfirm || 'Delete game App ID ') + appId + (t.deleteConfirmSuffix || ' from the list?');
+
+            if (!confirm(confirmText)) return;
+
+            try {
+                await fetch(`/api/games/${appId}`, { method: 'DELETE' });
+                loadGamesList();
+            } catch (e) {
+                const networkError = t.networkError || 'Network error: ';
+                alert(networkError + e);
+            }
+        }
+
+        // Отправка формы
+        document.getElementById('unlockForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = document.getElementById('submitBtn');
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+            const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
+            const t = translations[currentLang] || translations.en || {};
+
+            // Показываем загрузку
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading-spinner"></div> ' + (t.processing || 'Обработка...');
+            resultDiv.classList.add('hidden');
+
+            const appId = document.getElementById('app_id').value.trim();
+            const useSteamtools = document.getElementById('use_steamtools').checked;
+            const useAutocrack = document.getElementById('use_autocrack').checked;
+            const versionLock = document.getElementById('version_lock').checked;
+
+            try {
+                const res = await fetch('/api/unlock', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        app_id: appId,
+                        use_steamtools: useSteamtools,
+                        use_autocrack: useAutocrack,
+                        version_lock: versionLock
+                    })
+                });
+
+                const data = await res.json();
+
+                resultDiv.classList.remove('hidden');
+
+                const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
+                const t = translations[currentLang] || translations.en || {};
+
+                // Используем message_key для перевода или message по умолчанию
+                const successMessage = data.message_key && t[data.message_key] ? t[data.message_key] : data.message;
+                const errorMessage = data.message;
+
+                if (data.success) {
+                    resultContent.innerHTML = `
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-green-400 font-semibold text-lg mb-2">${successMessage}</h3>
+                                <div class="grid grid-cols-2 gap-4 text-sm text-gray-400">
+                                    <p>${t.repo}: <span class="text-cyan-400 mono-glow">${data.selected_repo}</span></p>
+                                    <p>${t.depots}: <span class="text-purple-400 mono-glow">${data.depot_count}</span></p>
+                                </div>
+                                <p class="text-gray-500 text-xs mt-4">${t.restartSteam}</p>
+                            </div>
+                        </div>
+                    `;
+                    loadGamesList();
+                } else {
+                    // Используем message_key для перевода ошибки
+                    const errorMsg = data.message_key && t[data.message_key] ? t[data.message_key] : errorMessage;
+                    resultContent.innerHTML = `
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-red-400 font-semibold text-lg mb-2">${t.error}</h3>
+                                <p class="text-gray-400">${errorMsg}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                resultDiv.classList.remove('hidden');
+                resultContent.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-red-400 font-semibold text-lg mb-2">${t.networkError}</h3>
+                            <p class="text-gray-400">${err.message}</p>
+                        </div>
+                    </div>
+                `;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = t.unlockBtn;
+            }
+        });
+
+        // Переменная для хранения переводов
+        let translations = {};
+
+        // Функция загрузки переводов с сервера
+        async function loadTranslations() {
+            try {
+                const res = await fetch('/api/get_locales');
+                const data = await res.json();
+                translations = data;
+                return true;
+            } catch (e) {
+                console.error('Ошибка загрузки переводов:', e);
+                translations = {};
+                return false;
+            }
+        }
+
+        // Функция применения переводов
+        function applyTranslations(lang) {
+            console.log('[TRANSLATE] Applying translations for language:', lang);
+            const t = translations[lang] || translations.en || {};
+
+            // Если переводы пустые, ничего не делаем
+            if (Object.keys(t).length === 0) {
+                console.warn('[TRANSLATE] Translations empty or missing for language:', lang);
+                return;
+            }
+
+            // Перевод элементов по data-i18n атрибуту
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = t[key];
+                    } else {
+                        // Используем innerHTML для поддержки HTML-тегов в переводе
+                        el.innerHTML = t[key];
+                    }
+                }
+            });
+
+            // Перевод placeholder по data-i18n-placeholder
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (t[key]) {
+                    el.placeholder = t[key];
+                }
+            });
+
+            // Перевод label
+            const labels = document.querySelectorAll('[data-i18n-label]');
+            labels.forEach(el => {
+                const key = el.getAttribute('data-i18n-label');
+                if (t[key]) el.textContent = t[key];
+            });
+
+            // Обновление описаний
+            updateToolLabel();
+            updateSourceLabel();
+        }
+
+        // Смена языка
+        async function changeLanguage(lang) {
+            // Сохраняем выбор в localStorage
+            localStorage.setItem('shadow_library_language', lang);
+
+            // Отправляем язык на сервер
+            try {
+                const res = await fetch('/api/set_language', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ language: lang })
+                });
+                const data = await res.json();
+                if (data.error) {
+                    console.error('Ошибка сохранения языка:', data.error);
+                } else {
+                    console.log('Язык сохранён на сервере:', data.language);
+                }
+            } catch (e) {
+                console.error('Ошибка сети при сохранении языка:', e);
+            }
+
+            // Если переводы ещё не загружены, загружаем их
+            if (Object.keys(translations).length === 0) {
+                await loadTranslations();
+            }
+
+            // Применяем перевод
+            applyTranslations(lang);
+
+            // Обновляем статус API
+            checkApiStatus();
+
+            console.log('Language changed to:', lang);
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('[INIT] DOM loaded, starting initialization...');
+
+            // Проверяем параметр URL для открытия модального окна Steam
+            const urlParams = new URLSearchParams(window.location.search);
+            const showSteamModal = urlParams.get('show_steam_modal');
+            const isFirstLaunch = urlParams.get('first_launch');
+
+            if (showSteamModal === '1' || isFirstLaunch === '1') {
+                setTimeout(() => {
+                    document.getElementById('steamPathModal').classList.remove('hidden');
+                }, 500);
+            }
+
+            // Перехватываем клики по внешним ссылкам - открываем в браузере по умолчанию
+            document.addEventListener('click', function (e) {
+                const link = e.target.closest('a[href^="http"]');
+                if (link && link.target === '_blank') {
+                    e.preventDefault();
+                    window.open(link.href, '_system');
+                }
+            });
+
+            // Сначала загружаем все переводы, затем применяем язык и показываем контент
+            Promise.all([loadTranslations(), loadSteamPath(), loadGamesList()]).then(() => {
+                console.log('[INIT] Translations and data loaded');
+
+                // Обновляем метки переключателей после загрузки переводов
+                updateToolLabel();
+                updateSourceLabel();
+
+                // Сначала пробуем получить язык из localStorage
+                const savedLang = localStorage.getItem('shadow_library_language');
+                console.log('[INIT] Saved language from localStorage:', savedLang);
+
+                if (savedLang) {
+                    // Язык уже был выбран пользователем ранее
+                    console.log('[INIT] Using saved language:', savedLang);
+                    document.getElementById('languageSelect').value = savedLang;
+                    applyTranslations(savedLang);
+                    checkApiStatus();
+                    document.body.classList.add('loaded');
+                } else {
+                    // Первый запуск - используем английский
+                    console.log('[INIT] First launch, using English');
+                    const defaultLang = 'en';
+                    localStorage.setItem('shadow_library_language', defaultLang);
+                    document.getElementById('languageSelect').value = defaultLang;
+                    applyTranslations(defaultLang);
+                    checkApiStatus();
+                    document.body.classList.add('loaded');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
