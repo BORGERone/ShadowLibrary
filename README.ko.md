@@ -3,10 +3,10 @@
   <a href="README.ru.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" alt="Russian" width="30"/></a>
   <a href="README.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="English" width="30"/></a>
   <a href="README.fr.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/40px-Flag_of_France.svg.png" alt="French" width="30"/></a>
-  <a href="README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/40px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/></a>
+  <a href="README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Spain.svg/1200px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/></a>
   <a href="README.de.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" alt="German" width="30"/></a>
   <a href="README.it.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1200px-Flag_of_Italy.svg.png" alt="Italian" width="30"/></a>
-  <a href="README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/500px-Flag_of_Poland.svg.png" alt="Polish" width="30"/></a>
+  <a href="README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" alt="Polish" width="30"/></a>
   <a href="README.pt.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png" alt="Portuguese" width="30"/></a>
   <a href="README.ja.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png" alt="Japanese" width="30"/></a>
   <a href="README.ko.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1200px-Flag_of_South_Korea.svg.png" alt="Korean" width="30"/></a>
@@ -51,7 +51,7 @@
 
 | 모드 | 설명 |
 |------|------|
-| **SteamTools (Steam++)** | 라이선스 에뮬레이션을 통해 게임을 잠금 해제하는 인기 있는 도구 |
+| **[SteamTools](https://steamtools.net/)** | 라이선스 에뮬레이션을 통해 게임을 잠금 해제하는 인기 있는 도구. [공식](https://steamtools.net/) 사이트에서 [SteamTools](https://steamtools.net/) 를 다운로드하세요 |
 | **GreenLuma** | Steam 확인을 우회하는 대체 솔루션 |
 
 ### 매니페스트 소스
@@ -73,26 +73,26 @@
 
 ## 요구 사항
 
-시작하기 전에 다음 요구 사항이 충족되는지 확인하십시오:
+시작하기 전에 다음 프로그램이 설치되어 있는지 확인하십시오:
 
 | 요구 사항 | 설명 | 링크 |
 |-----------|------|------|
 | **SteamTools** | SteamTools 모드에 필요 | [steamtools.net](https://steamtools.net/) |
 | **Steam** | 설치된 Steam 클라이언트 | [store.steampowered.com](https://store.steampowered.com/) |
+| **Python** | 설치된 현재 버전의 Python | [python.org](https://www.python.org/downloads/) |
 
 ### SteamTools 설치
 
-프로그램에는 SteamTools 가 필요하며 개발자 공식 웹사이트에서 다운로드할 수 있습니다:
-
 1. 공식 웹사이트 방문: **[SteamTools](https://steamtools.net/)**
-2. 최신 버전의 프로그램 다운로드
-3. 설치 프로그램의 지침 따르기
+2. 최신 버전의 프로그램을 다운로드하여 설치
 
 ---
 
 ## 사용 지침
 
 ### 초기 설정
+
+**<u>반드시</u>** **[<u>SteamTools</u>](https://steamtools.net/)** <u>가 설치되어 있는지 확인하십시오. 설치되지 않은 경우 GreenLuma 크랙만 작동합니다</u>**
 
 1. 첫 실행 시 오른쪽 상단의 **「Steam 경로」**메뉴를 엽니다
 2. Steam 루트 폴더 (`steam.exe` 가 있는 곳) 경로를 지정합니다
@@ -153,7 +153,7 @@
 ### Denuvo 우회
 
 1. 컴퓨터에서 게임의 정품 버전을 실행합니다 — 이렇게 하면 Denuvo 가 장치를 인증한 후 Shadow Library 를 통해 크랙 버전을 사용할 수 있습니다
-2. 하이퍼바이저를 통한 우회 사용
+2. 하이퍼바이저를 통한 우회 사용 (추가 도구 필요)
 
 ---
 

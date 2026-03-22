@@ -3,10 +3,10 @@
   <a href="README.ru.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" alt="Russian" width="30"/></a>
   <a href="README.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="English" width="30"/></a>
   <a href="README.fr.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/40px-Flag_of_France.svg.png" alt="French" width="30"/></a>
-  <a href="README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/40px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/></a>
+  <a href="README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Spain.svg/1200px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/></a>
   <a href="README.de.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" alt="German" width="30"/></a>
   <a href="README.it.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1200px-Flag_of_Italy.svg.png" alt="Italian" width="30"/></a>
-  <a href="README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/500px-Flag_of_Poland.svg.png" alt="Polish" width="30"/></a>
+  <a href="README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" alt="Polish" width="30"/></a>
   <a href="README.pt.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png" alt="Portuguese" width="30"/></a>
   <a href="README.ja.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png" alt="Japanese" width="30"/></a>
   <a href="README.ko.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1200px-Flag_of_South_Korea.svg.png" alt="Korean" width="30"/></a>
@@ -51,7 +51,7 @@
 
 | मोड | विवरण |
 |-----|-------|
-| **SteamTools (Steam++)** | लाइसेंस अनुकरण के माध्यम से गेम अनलॉक करने के लिए लोकप्रिय टूल |
+| **[SteamTools](https://steamtools.net/)** | लाइसेंस अनुकरण के माध्यम से गेम अनलॉक करने के लिए लोकप्रिय टूल। [आधिकारिक](https://steamtools.net/) साइट से [SteamTools](https://steamtools.net/) डाउनलोड करें |
 | **GreenLuma** | Steam सत्यापनों को बायपास करने के लिए वैकल्पिक समाधान |
 
 ### मैनिफेस्ट स्रोत
@@ -73,26 +73,26 @@
 
 ## आवश्यकताएं
 
-शुरू करने से पहले सुनिश्चित करें कि निम्नलिखित आवश्यकताएं पूरी की गई हैं:
+शुरू करने से पहले सुनिश्चित करें कि निम्नलिखित प्रोग्राम स्थापित हैं:
 
 | आवश्यकता | विवरण | लिंक |
 |----------|-------|------|
 | **SteamTools** | SteamTools मोड के लिए आवश्यक | [steamtools.net](https://steamtools.net/) |
 | **Steam** | स्थापित Steam क्लाइंट | [store.steampowered.com](https://store.steampowered.com/) |
+| **Python** | स्थापित Python का वर्तमान संस्करण | [python.org](https://www.python.org/downloads/) |
 
 ### SteamTools स्थापना
 
-प्रोग्राम को SteamTools की आवश्यकता है, जिसे डेवलपर की आधिकारिक वेबसाइट से डाउनलोड किया जा सकता है:
-
 1. आधिकारिक वेबसाइट पर जाएं: **[SteamTools](https://steamtools.net/)**
-2. प्रोग्राम का नवीनतम संस्करण डाउनलोड करें
-3. इंस्टॉलर के निर्देशों का पालन करें
+2. प्रोग्राम का नवीनतम संस्करण डाउनलोड और इंस्टॉल करें
 
 ---
 
 ## उपयोग निर्देश
 
 ### प्रारंभिक सेटअप
+
+**<u>जांचना न भूलें कि आपके पास</u>** **[<u>SteamTools</u>](https://steamtools.net/)** <u>स्थापित है, अन्यथा केवल GreenLuma क्रैक काम करेगा</u>**
 
 1. पहले लॉन्च पर, ऊपरी दाएं कोने में **«Steam पथ»** मेनू खोलें
 2. Steam रूट फ़ोल्डर का पथ निर्दिष्ट करें (जहां `steam.exe` स्थित है)
@@ -153,7 +153,7 @@
 ### Denuvo बायपास
 
 1. अपने कंप्यूटर पर गेम का वैध संस्करण लॉन्च करें — यह Denuvo को डिवाइस को अधिकृत करने की अनुमति देता है, जिसके बाद आप Shadow Library के माध्यम से क्रैक संस्करण का उपयोग कर सकते हैं
-2. हाइपरवाइजर के माध्यम से बायपास का उपयोग
+2. हाइपरवाइजर के माध्यम से बायपास का उपयोग (अतिरिक्त टूल की आवश्यकता)
 
 ---
 

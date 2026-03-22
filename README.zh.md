@@ -3,10 +3,10 @@
   <a href="README.ru.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" alt="Russian" width="30"/></a>
   <a href="README.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="English" width="30"/></a>
   <a href="README.fr.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/40px-Flag_of_France.svg.png" alt="French" width="30"/></a>
-  <a href="README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/40px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/></a>
+  <a href="README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Spain.svg/1200px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/></a>
   <a href="README.de.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" alt="German" width="30"/></a>
   <a href="README.it.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1200px-Flag_of_Italy.svg.png" alt="Italian" width="30"/></a>
-  <a href="README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/500px-Flag_of_Poland.svg.png" alt="Polish" width="30"/></a>
+  <a href="README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" alt="Polish" width="30"/></a>
   <a href="README.pt.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png" alt="Portuguese" width="30"/></a>
   <a href="README.ja.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png" alt="Japanese" width="30"/></a>
   <a href="README.ko.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1200px-Flag_of_South_Korea.svg.png" alt="Korean" width="30"/></a>
@@ -41,7 +41,7 @@
 
 ## 描述
 
-**Shadow Library** 是一个软件解决方案，通过替代游戏激活方法扩展 Steam 用户的功能。该应用程序通过流行工具 **SteamTools** 和 **GreenLuma** 提供方便的 Web 界面来管理游戏解锁。
+**Shadow Library** 是一个软件解决方案，通过替代游戏激活方法扩展 Steam 用户的功能。该应用程序通过流行工具 **[SteamTools](https://steamtools.net/)** 和 **GreenLuma** 提供方便的 Web 界面来管理游戏解锁。
 
 ---
 
@@ -51,7 +51,7 @@
 
 | 模式 | 描述 |
 |------|------|
-| **SteamTools (Steam++)** | 通过许可证模拟解锁游戏的流行工具 |
+| **[SteamTools](https://steamtools.net/)** | 通过许可证模拟解锁游戏的流行工具。从 [官方](https://steamtools.net/) 网站下载 [SteamTools](https://steamtools.net/) |
 | **GreenLuma** | 绕过 Steam 检查的替代解决方案 |
 
 ### 清单来源
@@ -73,26 +73,26 @@
 
 ## 要求
 
-开始前，请确保满足以下要求：
+开始前，请确保安装了以下程序：
 
 | 要求 | 描述 | 链接 |
 |------|------|------|
 | **SteamTools** | SteamTools 模式所需 | [steamtools.net](https://steamtools.net/) |
 | **Steam** | 已安装的 Steam 客户端 | [store.steampowered.com](https://store.steampowered.com/) |
+| **Python** | 已安装当前版本的 Python | [python.org](https://www.python.org/downloads/) |
 
 ### 安装 SteamTools
 
-程序需要 SteamTools，可以从开发者官方网站下载：
-
 1. 访问官方网站：**[SteamTools](https://steamtools.net/)**
-2. 下载最新版本的程序
-3. 按照安装程序的指示操作
+2. 下载并安装最新版本的程序
 
 ---
 
 ## 使用说明
 
 ### 初始设置
+
+**<u>不要忘记检查是否安装了</u>** **[<u>SteamTools</u>](https://steamtools.net/)**，<u>否则只有 GreenLuma 破解能工作</u>
 
 1. 首次启动时，打开右上角的 **「Steam 路径」**菜单
 2. 指定 Steam 根文件夹的路径（`steam.exe` 所在位置）
@@ -153,7 +153,7 @@
 ### Denuvo 绕过方法
 
 1. 在您的计算机上运行游戏的正版版本 — 这将允许 Denuvo 授权设备，之后您可以通过 Shadow Library 使用破解版本
-2. 使用通过管理程序的绕过
+2. 使用通过管理程序的绕过（需要额外工具）
 
 ---
 

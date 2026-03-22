@@ -3,10 +3,10 @@
   <a href="README.ru.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" alt="Russian" width="30"/></a>
   <a href="README.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="English" width="30"/></a>
   <a href="README.fr.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/40px-Flag_of_France.svg.png" alt="French" width="30"/></a>
-  <a href="README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/40px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/></a>
+  <a href="README.es.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Spain.svg/1200px-Flag_of_Spain.svg.png" alt="Spanish" width="30"/></a>
   <a href="README.de.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" alt="German" width="30"/></a>
   <a href="README.it.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1200px-Flag_of_Italy.svg.png" alt="Italian" width="30"/></a>
-  <a href="README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/500px-Flag_of_Poland.svg.png" alt="Polish" width="30"/></a>
+  <a href="README.pl.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" alt="Polish" width="30"/></a>
   <a href="README.pt.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png" alt="Portuguese" width="30"/></a>
   <a href="README.ja.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png" alt="Japanese" width="30"/></a>
   <a href="README.ko.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1200px-Flag_of_South_Korea.svg.png" alt="Korean" width="30"/></a>
@@ -41,7 +41,7 @@
 
 ## Opis
 
-**Shadow Library** to rozwiązanie programowe, które rozszerza możliwości użytkowników Steam poprzez alternatywne metody aktywacji gier. Aplikacja zapewnia wygodny interfejs internetowy do zarządzania odblokowywaniem gier za pomocą popularnych narzędzi: **SteamTools** i **GreenLuma**.
+**Shadow Library** to rozwiązanie programowe, które rozszerza możliwości użytkowników Steam poprzez alternatywne metody aktywacji gier. Aplikacja zapewnia wygodny interfejs internetowy do zarządzania odblokowywaniem gier za pomocą popularnych narzędzi: **[SteamTools](https://steamtools.net/)** i **GreenLuma**.
 
 ---
 
@@ -51,7 +51,7 @@
 
 | Tryb | Opis |
 |------|------|
-| **SteamTools (Steam++)** | Popularne narzędzie do odblokowywania gier poprzez emulację licencji |
+| **[SteamTools](https://steamtools.net/)** | Popularne narzędzie do odblokowywania gier poprzez emulację licencji. Pobierz [SteamTools](https://steamtools.net/) z [oficjalnej](https://steamtools.net/) strony |
 | **GreenLuma** | Alternatywne rozwiązanie do omijania weryfikacji Steam |
 
 ### Źródła manifestów
@@ -73,26 +73,26 @@
 
 ## Wymagania
 
-Przed rozpoczęciem upewnij się, że spełnione są następujące wymagania:
+Przed rozpoczęciem upewnij się, że zainstalowano następujące programy:
 
 | Wymaganie | Opis | Link |
 |-----------|------|------|
 | **SteamTools** | Wymagane dla trybu SteamTools | [steamtools.net](https://steamtools.net/) |
 | **Steam** | Zainstalowany klient Steam | [store.steampowered.com](https://store.steampowered.com/) |
+| **Python** | Zainstalowana aktualna wersja Python | [python.org](https://www.python.org/downloads/) |
 
 ### Instalacja SteamTools
 
-Program wymaga SteamTools, który można pobrać z oficjalnej strony producenta:
-
-1. Odwiedź oficjalną stronę **[SteamTools](https://steamtools.net/)**
-2. Pobierz najnowszą wersję programu
-3. Postępuj zgodnie z instrukcjami instalatora
+1. Odwiedź oficjalną stronę: **[SteamTools](https://steamtools.net/)**
+2. Pobierz i zainstaluj najnowszą wersję programu
 
 ---
 
 ## Instrukcja użytkowania
 
 ### Konfiguracja początkowa
+
+**<u>Nie zapomnij sprawdzić, czy masz zainstalowany</u>** **[<u>SteamTools</u>](https://steamtools.net/)**, <u>inaczej będzie działać tylko crack przez GreenLuma</u>
 
 1. Przy pierwszym uruchomieniu otwórz menu **«Ścieżka Steam»** w prawym górnym rogu
 2. Wskaż ścieżkę do głównego folderu Steam (gdzie znajduje się `steam.exe`)
@@ -153,7 +153,7 @@ Po pomyślnym przetworzeniu gra pojawi się na liście odblokowanych gier.
 ### Obejścia Denuvo
 
 1. Uruchom legalną wersję gry na swoim komputerze — pozwala to Denuvo autoryzować urządzenie, po czym można używać skrakowanej wersji przez Shadow Library
-2. Użycie obejść przez hipervisor
+2. Użycie obejść przez hipervisor (wymaga dodatkowych narzędzi)
 
 ---
 
