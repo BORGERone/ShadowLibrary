@@ -172,7 +172,7 @@ Después del procesamiento exitoso, el juego aparecerá en la lista de juegos de
 
 ## Licencia
 
-El proyecto se distribuye sin una licencia explícita. Todos los derechos reservados.
+Este proyecto está distribuido bajo la [Licencia GPL-3.0](LICENSE).
 
 ---
 

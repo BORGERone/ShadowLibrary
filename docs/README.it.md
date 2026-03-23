@@ -172,7 +172,7 @@ Dopo l'elaborazione riuscita, il gioco apparirà nell'elenco dei giochi sbloccat
 
 ## Licenza
 
-Il progetto è distribuito senza una licenza esplicita. Tutti i diritti riservati.
+Questo progetto è distribuito sotto la [Licenza GPL-3.0](LICENSE).
 
 ---
 

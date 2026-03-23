@@ -172,7 +172,7 @@ Po pomyślnym przetworzeniu gra pojawi się na liście odblokowanych gier.
 
 ## Licencja
 
-Projekt jest dystrybuowany bez wyraźnej licencji. Wszelkie prawa zastrzeżone.
+Projekt jest dystrybuowany na licencji [GPL-3.0](LICENSE).
 
 ---
 

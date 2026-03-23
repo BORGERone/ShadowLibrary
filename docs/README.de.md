@@ -172,7 +172,7 @@ Nach erfolgreicher Verarbeitung erscheint das Spiel in der Liste der freigeschal
 
 ## Lizenz
 
-Das Projekt wird ohne explizite Lizenz vertrieben. Alle Rechte vorbehalten.
+Dieses Projekt ist unter der [GPL-3.0-Lizenz](LICENSE) lizenziert.
 
 ---
 

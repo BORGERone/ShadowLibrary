@@ -172,7 +172,7 @@ Após processamento bem-sucedido, o jogo aparecerá na lista de jogos desbloquea
 
 ## Licença
 
-O projeto é distribuído sem uma licença explícita. Todos os direitos reservados.
+Este projeto está licenciado sob a [Licença GPL-3.0](LICENSE).
 
 ---
 

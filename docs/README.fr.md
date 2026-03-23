@@ -172,7 +172,7 @@ Après un traitement réussi, le jeu apparaîtra dans la liste des jeux débloqu
 
 ## Licence
 
-Le projet est distribué sans licence explicite. Tous droits réservés.
+Ce projet est distribué sous la [licence GPL-3.0](LICENSE).
 
 ---
 
