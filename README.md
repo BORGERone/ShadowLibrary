@@ -46,10 +46,14 @@
 ---
 
 
-
-https://github.com/user-attachments/assets/51a47097-e5da-4330-9ca0-aa211497bba1
-
-
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/51a47097-e5da-4330-9ca0-aa211497bba1" 
+         muted="muted" 
+         autoplay="autoplay" 
+         loop="loop" 
+         style="max-width: 100%;">
+  </video>
+</div>
 
 ## Features
 
