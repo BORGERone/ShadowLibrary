@@ -18,10 +18,6 @@
 
 ![](https://github.com/BORGERone/ShadowLibrary/blob/main/docs/logo.png)
 
-<h1 align="center">
-  <img alt="Shadow Library" src="https://img.shields.io/badge/Shadow-Library-blue?style=for-the-badge&logo=steam&logoColor=white">
-</h1>
-
 <p align="center">
   <strong>Outil de déblocage de jeux Steam</strong>
 </p>
