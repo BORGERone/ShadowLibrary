@@ -16,6 +16,8 @@
   <a href="README.hi.md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png" alt="Hindi" width="30"/> हिन्दी</a>
 </p>
 
+![](https://github.com/BORGERone/ShadowLibrary/blob/main/docs/logo.png)
+
 <h1 align="center">
   <img alt="Shadow Library" src="https://img.shields.io/badge/Shadow-Library-blue?style=for-the-badge&logo=steam&logoColor=white">
 </h1>
