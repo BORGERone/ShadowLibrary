@@ -19,11 +19,8 @@ if exist "dist" rmdir /s /q "dist"
 echo [3/4] Building application...
 python -m PyInstaller build.spec --noconfirm
 
-echo [4/4] Copying additional files...
+echo [4/4] Build complete...
 if exist "dist\ShadowLibrary.exe" (
-    copy "icon.ico" "dist\" >nul 2>&1
-    copy "config.json" "dist\" >nul 2>&1
-    
     echo.
     echo ============================================================
     echo   Build completed successfully!

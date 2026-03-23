@@ -24,6 +24,7 @@
     "depots": "ডিপো",
     "delete": "हटाएं",
     "deleteConfirm": "गेम App ID हटाएं ",
+    "updating": "अपडेट हो रहा है",
     "configuration": "कॉन्फ़िगरेशन",
     "githubApiStatus": "GitHub API स्थिति",
     "working": "काम कर रहा है",
@@ -49,7 +50,6 @@
     "repo": "रिपॉजिटरी",
     "unknown": "अज्ञात",
     "deleteConfirmSuffix": " सूची से हटाएं?",
-    "footer": "Shadow Library | लेखक: BORGER | संस्करण: 1.0.0",
     "github": "GitHub",
     "officialSite": "आधिकारिक साइट"
 }

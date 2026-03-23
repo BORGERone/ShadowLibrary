@@ -24,6 +24,7 @@
     "depots": "저장소",
     "delete": "삭제",
     "deleteConfirm": "게임 App ID 를 삭제하시겠습니까？",
+    "updating": "업데이트 중",
     "configuration": "구성",
     "githubApiStatus": "GitHub API 상태",
     "working": "작동 중",
@@ -49,7 +50,6 @@
     "repo": "저장소",
     "unknown": "알 수 없음",
     "deleteConfirmSuffix": " 을 (를) 목록에서 삭제하시겠습니까?",
-    "footer": "Shadow Library | 저자：BORGER | 버전：1.0.0",
     "github": "GitHub",
     "officialSite": "공식 사이트"
 }

@@ -24,6 +24,7 @@
     "depots": "仓库",
     "delete": "删除",
     "deleteConfirm": "删除游戏 App ID ",
+    "updating": "更新中",
     "configuration": "配置",
     "githubApiStatus": "GitHub API 状态",
     "working": "工作中",
@@ -49,7 +50,6 @@
     "repo": "仓库",
     "unknown": "未知",
     "deleteConfirmSuffix": " 从列表中删除？",
-    "footer": "Shadow Library | 作者：BORGER | 版本：1.0.0",
     "github": "GitHub",
     "officialSite": "官方网站"
 }

@@ -24,6 +24,7 @@
     "depots": "Depósitos",
     "delete": "Excluir",
     "deleteConfirm": "Excluir jogo App ID ",
+    "updating": "Atualizando",
     "configuration": "Configuração",
     "githubApiStatus": "Status da API GitHub",
     "working": "Funcionando",
@@ -49,7 +50,6 @@
     "repo": "Repositório",
     "unknown": "Desconhecido",
     "deleteConfirmSuffix": " da lista?",
-    "footer": "Shadow Library | Autor: BORGER | Versão: 1.0.0",
     "github": "GitHub",
     "officialSite": "Site oficial"
 }

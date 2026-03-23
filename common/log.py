@@ -11,8 +11,10 @@ except ImportError as e:
 
     os.system("pause")
 
-if not os.path.exists(f"./logs"):
-    os.makedirs(f"./logs")
+# Папка для логов во временной директории
+LOGS_DIR = os.path.join(os.environ.get("TEMP", "./logs"), "ShadowLibrary", "logs")
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
 
 
 def log(name: str) -> logging.Logger:
@@ -39,7 +41,7 @@ def log(name: str) -> logging.Logger:
     logger = setup_logger(name, level=level, formatter=terminal_formatter)
 
     if LOG_FILE:
-        logfile = f"./logs/{name}.log"
+        logfile = os.path.join(LOGS_DIR, f"{name}.log")
         file_handler = logging.FileHandler(logfile)
         file_formatter = logging.Formatter(
             "[%(asctime)s] | [%(name)s:%(levelname)s] | [%(module)s.%(funcName)s:%(lineno)d] - %(message)s",

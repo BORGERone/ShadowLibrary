@@ -690,7 +690,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-gray-600 text-sm py-8 border-t border-gray-800">
-            <p data-i18n="footer">Shadow Library | Автор: BORGER | Версия: 1.0.0</p>
+            <p>Shadow Library | Author: BORGER | Version: 1.1.0</p>
             <p class="mt-2">
                 <a href="https://github.com/BORGERone/ShadowLibrary" target="_blank"
                     class="text-cyan-400 underline hover:text-cyan-300" data-i18n="github">GitHub</a>
@@ -840,24 +840,60 @@
                     return;
                 }
 
-                container.innerHTML = games.map(game => `
+                container.innerHTML = games.map(game => {
+                    // Определяем название игры
+                    let displayName = game.game_name;
+                    if (!displayName || displayName === 'Unknown' || displayName === 'Неизвестно') {
+                        displayName = `App ${game.app_id}`;
+                    }
+
+                    // Определяем, есть ли изображение
+                    const hasIcon = game.game_icon && game.game_icon.trim() !== '';
+
+                    // Проверяем, нуждается ли игра в обновлении
+                    const needsUpdate = (!game.game_name ||
+                        game.game_name === 'Unknown' ||
+                        game.game_name === 'Неизвестно' ||
+                        game.game_name.startsWith('App ')) ||
+                        (!hasIcon);
+
+                    return `
                     <div class="gamer-card p-0 rounded-xl border border-gray-800 overflow-hidden relative">
                         <!-- Фоновое изображение игры -->
-                        ${game.game_icon
-                        ? `<div class="absolute inset-0 w-full h-full">
-                                    <img src="${game.game_icon}" alt="${game.game_name}" class="w-full h-full object-cover opacity-60" onerror="this.style.display='none'" />
+                        ${hasIcon
+                            ? `<div class="absolute inset-0 w-full h-full">
+                                    <img src="${game.game_icon}" alt="${displayName}" class="w-full h-full object-cover opacity-60" onerror="this.style.display='none'" />
                                     <!-- Градиенты для затемнения краев -->
                                     <div class="absolute inset-0 bg-gradient-to-r from-[#050507]/80 via-[#050507]/20 to-[#050507]"></div>
                                     <div class="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/50"></div>
                                </div>`
-                        : `<div class="absolute inset-0 bg-gradient-to-br from-cyan-900/20 via-[#050507] to-purple-900/20"></div>`
-                    }
-                        
+                            : `<div class="absolute inset-0 bg-gradient-to-br from-cyan-900/20 via-[#050507] to-purple-900/20 flex items-center justify-center">
+                                    <div class="text-center opacity-30">
+                                        <svg class="w-24 h-24 mx-auto text-cyan-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path>
+                                        </svg>
+                                        <p class="text-gray-400 text-sm mt-2">App ${game.app_id}</p>
+                                    </div>
+                               </div>`
+                        }
+
                         <!-- Контент -->
                         <div class="relative z-10 p-6 flex items-center justify-between flex-wrap gap-4">
                             <div class="flex items-center gap-4">
                                 <div>
-                                    <h3 class="text-gray-200 font-semibold text-lg drop-shadow-lg">${game.game_name || 'Неизвестно'}</h3>
+                                    <div class="flex items-center gap-2">
+                                        <h3 class="text-gray-200 font-semibold text-lg drop-shadow-lg">${displayName}</h3>
+                                        ${needsUpdate
+                            ? `<span class="status-badge status-error" style="backdrop-filter: blur(8px);" title="Данные неполные, идёт автообновление...">
+                                                <svg class="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                <span data-i18n="updating">Updating</span>
+                                            </span>`
+                            : ''
+                        }
+                                    </div>
                                     <p class="text-gray-400 text-sm mono-glow drop-shadow">App ID: ${game.app_id}</p>
                                     <div class="flex items-center gap-3 mt-2">
                                         <span class="status-badge status-success" style="backdrop-filter: blur(8px);">
@@ -878,7 +914,8 @@
                             </div>
                         </div>
                     </div>
-                `).join('');
+                `;
+                }).join('');
 
                 // Применяем переводы к новым элементам
                 const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
@@ -905,6 +942,30 @@
             }
         }
 
+        // Проверка игр с неполными данными (для логирования)
+        // Фоновая задача на сервере автоматически обновляет их каждые 2 секунды
+        async function checkAndAutoRefreshGames() {
+            try {
+                const res = await fetch('/api/games');
+                const games = await res.json();
+
+                for (const game of games) {
+                    // Проверяем, являются ли данные "пустыми"
+                    const isUnknown = !game.game_name ||
+                        game.game_name === 'Unknown' ||
+                        game.game_name === 'Неизвестно' ||
+                        game.game_name.startsWith('App ');
+                    const hasNoIcon = !game.game_icon || game.game_icon.trim() === '';
+
+                    if (isUnknown || hasNoIcon) {
+                        console.log(`[AUTO-REFRESH] Game ${game.app_id} needs update. Server auto-refreshes every 2s.`);
+                    }
+                }
+            } catch (e) {
+                console.error('[AUTO-REFRESH] Error checking games:', e);
+            }
+        }
+
         // Отправка формы
         document.getElementById('unlockForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -920,20 +981,30 @@
             btn.innerHTML = '<div class="loading-spinner"></div> ' + (t.processing || 'Обработка...');
             resultDiv.classList.add('hidden');
 
-            const appId = document.getElementById('app_id').value.trim();
+            const appIdInput = document.getElementById('app_id').value.trim();
             const useSteamtools = document.getElementById('use_steamtools').checked;
             const useAutocrack = document.getElementById('use_autocrack').checked;
             const versionLock = document.getElementById('version_lock').checked;
+
+            // Извлекаем название из URL Steam (если есть)
+            let gameNameFromUrl = '';
+            const urlMatch = appIdInput.match(/store\.steampowered\.com\/app\/\d+\/([^/?#]+)/i);
+            if (urlMatch) {
+                gameNameFromUrl = decodeURIComponent(urlMatch[1].replace(/_/g, ' '));
+                // Убираем лишние символы в конце
+                gameNameFromUrl = gameNameFromUrl.replace(/\s*\(.*\)\s*$/, '');
+            }
 
             try {
                 const res = await fetch('/api/unlock', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        app_id: appId,
+                        app_id: appIdInput,
                         use_steamtools: useSteamtools,
                         use_autocrack: useAutocrack,
-                        version_lock: versionLock
+                        version_lock: versionLock,
+                        game_name_from_url: gameNameFromUrl
                     })
                 });
 
@@ -1155,6 +1226,10 @@
                     checkApiStatus();
                     document.body.classList.add('loaded');
                 }
+
+                // Проверяем и запускаем автообновление для игр с неполными данными
+                console.log('[INIT] Checking for games that need auto-refresh...');
+                checkAndAutoRefreshGames();
             });
         });
     </script>

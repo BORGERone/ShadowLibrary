@@ -9,6 +9,7 @@ import vdf
 import re
 import ctypes
 import subprocess
+import asyncio
 from pathlib import Path
 from typing import Tuple, List, Dict
 from fastapi import FastAPI, Request
@@ -20,15 +21,37 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from common import log, variable
 from common.variable import CLIENT, HEADER, REPO_LIST
 
-LOG = log.log("Shadow-Library")
-DB_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cracked_games.json")
-CONFIG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
-
 # Путь к данным для PyInstaller
 if getattr(sys, 'frozen', False):
     BASE_DIR = sys._MEIPASS
+    EXE_DIR = os.path.dirname(sys.executable)
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    EXE_DIR = BASE_DIR
+
+# Папка для данных в %APPDATA%
+DATA_DIR = os.path.join(os.environ.get("APPDATA", "./data"), "ShadowLibrary")
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+
+LOG = log.log("Shadow-Library")
+DB_FILE = os.path.join(DATA_DIR, "cracked_games.json")
+
+# Путь к конфигу для чтения (внешний файл рядом с exe или встроенный)
+def get_config_read_path():
+    external_config = os.path.join(EXE_DIR, "config.json")
+    if os.path.exists(external_config):
+        return external_config
+    return os.path.join(BASE_DIR, "config.json")
+
+# Путь к конфигу для записи (всегда в %APPDATA%)
+CONFIG_WRITE_PATH = os.path.join(DATA_DIR, "config.json")
+
+# Для чтения используем внешний или встроенный
+CONFIG_FILE = get_config_read_path()
+
+# Глобальная задача для фонового обновления
+background_task = None
 
 # Для Windows - вывод окна на передний план
 def bring_window_to_front(window_title_substring):
@@ -86,7 +109,8 @@ def open_file_with_app(file_path):
 app = FastAPI(title="Shadow Library - Web Interface")
 
 # === НАСТРОЙКИ ===
-MANIFEST_DIR = "manifests"
+# Папка для манифестов в %APPDATA%
+MANIFEST_DIR = os.path.join(os.environ.get("APPDATA", "./manifests"), "ShadowLibrary", "manifests")
 
 if not os.path.exists(MANIFEST_DIR):
     os.makedirs(MANIFEST_DIR)
@@ -113,6 +137,14 @@ def save_db(data):
 
 
 def get_config(key: str, default=""):
+    # Сначала пробуем читать из APPDATA (где сохраняем настройки)
+    if os.path.exists(CONFIG_WRITE_PATH):
+        try:
+            with open(CONFIG_WRITE_PATH, "r", encoding="utf-8") as f:
+                return json.load(f).get(key, default)
+        except:
+            pass
+    # Если нет - читаем из внешнего или встроенного конфига
     if os.path.exists(CONFIG_FILE):
         try:
             with open(CONFIG_FILE, "r", encoding="utf-8") as f:
@@ -131,16 +163,25 @@ def get_language():
 
 
 def set_language(lang: str) -> bool:
+    # Читаем из APPDATA или CONFIG_FILE
     config = {}
-    if os.path.exists(CONFIG_FILE):
+    if os.path.exists(CONFIG_WRITE_PATH):
+        try:
+            with open(CONFIG_WRITE_PATH, "r", encoding="utf-8") as f:
+                config = json.load(f)
+        except:
+            pass
+    elif os.path.exists(CONFIG_FILE):
         try:
             with open(CONFIG_FILE, "r", encoding="utf-8") as f:
                 config = json.load(f)
         except:
             pass
+    
     config["Language"] = lang
+    # Записываем всегда в APPDATA
     try:
-        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+        with open(CONFIG_WRITE_PATH, "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2, ensure_ascii=False)
         return True
     except:
@@ -188,6 +229,7 @@ class GameRequest(BaseModel):
     app_id: str
     use_steamtools: bool = True
     use_autocrack: bool = True  # True = SteamAutoCrack, False = ManifestHub
+    game_name_from_url: str = ""  # Название из URL Steam
 
 
 class SteamPathRequest(BaseModel):
@@ -263,6 +305,7 @@ async def api_set_steam_path(req: SteamPathRequest):
     if not os.path.exists(os.path.join(path, "steam.exe")):
         return JSONResponse({"error": "В указанной папке не найден steam.exe"}, status_code=400)
 
+    # Читаем конфиг из внешнего файла (рядом с exe) или встроенного
     config = {}
     if os.path.exists(CONFIG_FILE):
         try:
@@ -270,10 +313,12 @@ async def api_set_steam_path(req: SteamPathRequest):
                 config = json.load(f)
         except:
             pass
+    
+    # Записываем всегда в APPDATA
     config["Custom_Steam_Path"] = path
-    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+    with open(CONFIG_WRITE_PATH, "w", encoding="utf-8") as f:
         json.dump(config, f, indent=2, ensure_ascii=False)
-    LOG.info(f"Steam path saved: {path} to {CONFIG_FILE}")
+    LOG.info(f"Steam path saved: {path} to {CONFIG_WRITE_PATH}")
     return {"status": "ok", "steam_path": path}
 
 
@@ -524,32 +569,77 @@ def RemoveUnlock(app_id, tool):
 
 async def get_game_name(app_id: str) -> str:
     try:
+        # Основная попытка - Steam API
         url = f"https://store.steampowered.com/api/appdetails?appids={app_id}"
         response = await CLIENT.get(url, timeout=10)
         data = response.json()
         if data.get(str(app_id), {}).get("success"):
-            return data[str(app_id)]["data"].get("name", "Unknown")
-        return "Unknown"
+            name = data[str(app_id)]["data"].get("name", "")
+            if name:
+                return name
+        
+        # Попытка 2: Парсинг HTML страницы магазина
+        try:
+            store_url = f"https://store.steampowered.com/app/{app_id}/"
+            response = await CLIENT.get(store_url, timeout=10)
+            if response.status_code == 200 and "Site Error" not in response.text:
+                # Ищем название в JSON-LD структу ре
+                import re
+                match = re.search(r'"name"\s*:\s*"([^"]+)"', response.text)
+                if match:
+                    name = match.group(1)
+                    # Очищаем от лишних символов
+                    if name and name.strip():
+                        return name.strip()
+                
+                # Ищем в title страницы
+                title_match = re.search(r'<title>([^-]+)\s*-', response.text)
+                if title_match:
+                    title = title_match.group(1).strip()
+                    if title and len(title) > 3 and title != "Steam":
+                        return title
+        except:
+            pass
+        
+        # Фоллбэк - используем App ID как название
+        return f"App {app_id}"
     except Exception as e:
         LOG.warning(f"Get game name error: {e}")
-        return "Unknown"
+        return f"App {app_id}"
 
 
 async def get_game_icon(app_id: str) -> str:
     try:
-        url = f"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/{app_id}/{app_id}.jpg"
-        response = await CLIENT.head(url, timeout=5)
-        if response.status_code == 200:
-            return url
+        # Попытка 1: Steam API с header_image
         api_url = f"https://store.steampowered.com/api/appdetails?appids={app_id}"
         response = await CLIENT.get(api_url, timeout=10)
         data = response.json()
         if data.get(str(app_id), {}).get("success"):
             game_data = data[str(app_id)]["data"]
-            if "header_image" in game_data:
-                return game_data["header_image"]
-            if "capsule_image" in game_data:
-                return game_data["capsule_image"]
+            # Пробуем разные поля для изображения
+            for field in ["header_image", "capsule_image", "small_capsule_image"]:
+                if field in game_data and game_data[field]:
+                    return game_data[field]
+        
+        # Попытка 2: Прямая ссылка на изображение Steam CDN
+        # Формат 1: shared.akamai.steamstatic.com
+        cdn_url = f"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/{app_id}/header.jpg"
+        try:
+            response = await CLIENT.head(cdn_url, timeout=5)
+            if response.status_code == 200:
+                return cdn_url
+        except:
+            pass
+        
+        # Формат 2: steamcdn-a.akamaihd.net (старый формат)
+        icon_url = f"https://steamcdn-a.akamaihd.net/steam/apps/{app_id}/header.jpg"
+        try:
+            response = await CLIENT.head(icon_url, timeout=5)
+            if response.status_code == 200:
+                return icon_url
+        except:
+            pass
+        
         return ""
     except Exception as e:
         LOG.warning(f"Get game icon error: {e}")
@@ -557,6 +647,7 @@ async def get_game_icon(app_id: str) -> str:
 
 
 def extract_app_id_from_input(input_str: str):
+    """Извлекает App ID из ввода (число или URL Steam)"""
     input_str = input_str.strip()
     if input_str.isdigit():
         return input_str
@@ -567,7 +658,21 @@ def extract_app_id_from_input(input_str: str):
     return digits if digits else None
 
 
-async def process_game(app_id: str, use_steamtools: bool, use_autocrack: bool, version_lock: bool = False) -> dict:
+def extract_game_name_from_url(input_str: str) -> str:
+    """Извлекает название игры из URL Steam вида /app/123/Game_Name/"""
+    input_str = input_str.strip()
+    # Паттерн: store.steampowered.com/app/123/Название_Игры
+    match = re.search(r'store\.steampowered\.com/app/\d+/([^/?#]+)', input_str)
+    if match:
+        # Заменяем подчёркивания на пробелы и декодируем URL
+        name = match.group(1).replace('_', ' ')
+        # Убираем лишние символы в конце (например, трейлеры)
+        name = re.sub(r'\s*\(.*\)\s*$', '', name)
+        return name.strip()
+    return ""
+
+
+async def process_game(app_id: str, use_steamtools: bool, use_autocrack: bool, version_lock: bool = False, game_name_from_url: str = "") -> dict:
     result = {"success": False, "message": "", "depot_count": 0, "selected_repo": "", "game_name": "", "game_icon": ""}
     try:
         extracted_app_id = extract_app_id_from_input(app_id)
@@ -590,8 +695,19 @@ async def process_game(app_id: str, use_steamtools: bool, use_autocrack: bool, v
             result["depot_count"] = len(depot_data)
             selected_repo, _ = await GetLatestRepoInfo(REPO_LIST, app_id, headers=HEADER, use_autocrack=use_autocrack)
             result["selected_repo"] = selected_repo or "Unknown"
-            result["game_name"] = await get_game_name(app_id)
+            
+            # Получаем название и иконку
             result["game_icon"] = await get_game_icon(app_id)
+            
+            # Сначала пробуем получить название из API
+            api_name = await get_game_name(app_id)
+            
+            # Если API вернул "App {id}", используем название из URL (если есть)
+            if api_name.startswith("App ") and game_name_from_url:
+                result["game_name"] = game_name_from_url
+            else:
+                result["game_name"] = api_name
+            
             db = load_db()
             game_entry = {"app_id": app_id, "game_name": result["game_name"], "game_icon": result["game_icon"],
                 "depot_count": len(depot_data), "tool": "SteamTools" if use_steamtools else "GreenLuma",
@@ -632,7 +748,13 @@ async def get_index():
 
 @app.post("/api/unlock")
 async def api_unlock(request: GameRequest):
-    result = await process_game(request.app_id, request.use_steamtools, request.use_autocrack, version_lock=False)
+    result = await process_game(
+        request.app_id,
+        request.use_steamtools,
+        request.use_autocrack,
+        version_lock=False,
+        game_name_from_url=request.game_name_from_url
+    )
     return result
 
 
@@ -652,6 +774,214 @@ async def api_delete_game(app_id: str):
     db = [g for g in db if g["app_id"] != app_id]
     save_db(db)
     return {"status": "ok", "deleted": app_id}
+
+
+@app.post("/api/games/{app_id}/refresh")
+async def api_refresh_game(app_id: str):
+    """Обновляет название и иконку игры из Steam API"""
+    db = load_db()
+    game = next((g for g in db if g["app_id"] == app_id), None)
+    if not game:
+        return JSONResponse({"error": "Игра не найдена"}, status_code=404)
+    
+    # Получаем свежие данные
+    game_name = await get_game_name(app_id)
+    game_icon = await get_game_icon(app_id)
+    
+    # Обновляем запись в базе
+    game["game_name"] = game_name
+    game["game_icon"] = game_icon
+    
+    # Сохраняем изменения
+    db = [g if g["app_id"] != app_id else game for g in db]
+    save_db(db)
+    
+    LOG.info(f"Refreshed game data for {app_id}: {game_name}")
+    return {"status": "ok", "app_id": app_id, "game_name": game_name, "game_icon": game_icon}
+
+
+@app.get("/api/games/{app_id}/check_data")
+async def api_check_game_data(app_id: str):
+    """Проверяет, являются ли данные игры неполными (Unknown или нет иконки)"""
+    db = load_db()
+    game = next((g for g in db if g["app_id"] == app_id), None)
+    if not game:
+        return JSONResponse({"error": "Игра не найдена"}, status_code=404)
+    
+    # Проверяем, являются ли данные "пустыми"
+    is_unknown = (
+        not game.get("game_name") or 
+        game.get("game_name") in ["Unknown", "Неизвестно"] or 
+        game.get("game_name", "").startswith("App ")
+    )
+    has_no_icon = not game.get("game_icon") or game.get("game_icon", "").strip() == ""
+    
+    needs_update = is_unknown or has_no_icon
+    
+    return {
+        "app_id": app_id,
+        "needs_update": needs_update,
+        "game_name": game.get("game_name", ""),
+        "game_icon": game.get("game_icon", ""),
+        "is_unknown": is_unknown,
+        "has_no_icon": has_no_icon
+    }
+
+
+@app.post("/api/games/{app_id}/auto_refresh")
+async def api_auto_refresh_game(app_id: str, max_attempts: int = 5, delay_seconds: int = 10):
+    """
+    Автоматически обновляет данные игры до 5 раз с интервалом 10 секунд,
+    пока не будут получены корректные данные
+    """
+    import asyncio
+    
+    db = load_db()
+    game = next((g for g in db if g["app_id"] == app_id), None)
+    if not game:
+        return JSONResponse({"error": "Игра не найдена"}, status_code=404)
+    
+    attempts = []
+    
+    for attempt in range(1, max_attempts + 1):
+        # Получаем свежие данные
+        game_name = await get_game_name(app_id)
+        game_icon = await get_game_icon(app_id)
+        
+        # Проверяем, успешна ли попытка
+        is_success = (
+            game_name and 
+            game_name not in ["Unknown", "Неизвестно"] and 
+            not game_name.startswith("App ") and
+            game_icon and 
+            game_icon.strip() != ""
+        )
+        
+        attempts.append({
+            "attempt": attempt,
+            "game_name": game_name,
+            "game_icon": game_icon,
+            "success": is_success
+        })
+        
+        LOG.info(f"Auto-refresh attempt {attempt}/{max_attempts} for {app_id}: {game_name}, success={is_success}")
+        
+        if is_success:
+            # Обновляем запись в базе
+            game["game_name"] = game_name
+            game["game_icon"] = game_icon
+            db = [g if g["app_id"] != app_id else game for g in db]
+            save_db(db)
+            
+            return {
+                "status": "success",
+                "app_id": app_id,
+                "game_name": game_name,
+                "game_icon": game_icon,
+                "attempts_made": attempt,
+                "attempts": attempts
+            }
+        
+        # Ждём перед следующей попыткой (кроме последней)
+        if attempt < max_attempts:
+            await asyncio.sleep(delay_seconds)
+
+    # Если все попытки исчерпаны, сохраняем последние полученные данные
+    game["game_name"] = game_name
+    game["game_icon"] = game_icon
+    db = [g if g["app_id"] != app_id else game for g in db]
+    save_db(db)
+
+    return {
+        "status": "exhausted",
+        "app_id": app_id,
+        "game_name": game_name,
+        "game_icon": game_icon,
+        "attempts_made": max_attempts,
+        "message": f"Все {max_attempts} попыток исчерпаны",
+        "attempts": attempts
+    }
+
+
+async def background_auto_refresh():
+    """
+    Фоновая задача: проверяет игры с неполными данными каждые 2 секунды
+    и обновляет их, если данные стали доступны
+    """
+    LOG.info("Background auto-refresh task started")
+    
+    while True:
+        try:
+            await asyncio.sleep(2)  # Ждём 2 секунды между проверками
+            
+            db = load_db()
+            updated = False
+            
+            for game in db:
+                app_id = game.get("app_id")
+                if not app_id:
+                    continue
+                
+                # Проверяем, являются ли данные неполными
+                current_name = game.get("game_name", "")
+                current_icon = game.get("game_icon", "")
+                
+                is_unknown = (
+                    not current_name or 
+                    current_name in ["Unknown", "Неизвестно"] or 
+                    current_name.startswith("App ")
+                )
+                has_no_icon = not current_icon or current_icon.strip() == ""
+                
+                needs_update = is_unknown or has_no_icon
+                
+                if needs_update:
+                    # Получаем свежие данные
+                    new_name = await get_game_name(app_id)
+                    new_icon = await get_game_icon(app_id)
+                    
+                    # Проверяем, улучшились ли данные
+                    name_improved = (
+                        new_name and 
+                        new_name not in ["Unknown", "Неизвестно"] and 
+                        not new_name.startswith("App ")
+                    )
+                    icon_improved = new_icon and new_icon.strip() != ""
+                    
+                    if name_improved or icon_improved:
+                        LOG.info(f"Background refresh: Updated App ID {app_id} -> {new_name}, icon: {bool(new_icon)}")
+                        game["game_name"] = new_name
+                        game["game_icon"] = new_icon
+                        updated = True
+            
+            if updated:
+                save_db(db)
+                LOG.info("Background refresh: Database updated")
+                
+        except Exception as e:
+            LOG.error(f"Background refresh error: {e}")
+            LOG.error(traceback.format_exc())
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Запускает фоновую задачу при старте сервера"""
+    global background_task
+    background_task = asyncio.create_task(background_auto_refresh())
+    LOG.info("Startup: Background auto-refresh task created")
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Останавливает фоновую задачу при выключении сервера"""
+    global background_task
+    if background_task:
+        background_task.cancel()
+        try:
+            await background_task
+        except asyncio.CancelledError:
+            pass
+        LOG.info("Shutdown: Background auto-refresh task stopped")
 
 
 if __name__ == "__main__":

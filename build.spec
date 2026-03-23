@@ -12,7 +12,6 @@ a = Analysis(
         ('templates', 'templates'),
         ('locales', 'locales'),
         ('common', 'common'),
-        ('icon.ico', '.'),
         ('config.json', '.'),
     ],
     hiddenimports=[
