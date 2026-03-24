@@ -37,8 +37,6 @@
   </a>
 </p>
 
-![NR](https://github.com/user-attachments/assets/afacc9be-5494-4d9d-a8db-0b868cba1ddc)
-
 ---
 
 ## 描述
@@ -46,6 +44,8 @@
 **Shadow Library** 是一个软件解决方案，通过替代游戏激活方法扩展 Steam 用户的功能。该应用程序通过流行工具 **[SteamTools](https://steamtools.net/)** 和 **GreenLuma** 提供方便的 Web 界面来管理游戏解锁。
 
 ---
+
+![NR](https://github.com/user-attachments/assets/afacc9be-5494-4d9d-a8db-0b868cba1ddc)
 
 ## 功能
 

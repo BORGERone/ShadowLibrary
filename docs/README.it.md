@@ -37,8 +37,6 @@
   </a>
 </p>
 
-![NR](https://github.com/user-attachments/assets/afacc9be-5494-4d9d-a8db-0b868cba1ddc)
-
 ---
 
 ## Descrizione
@@ -46,6 +44,8 @@
 **Shadow Library** è una soluzione software che espande le capacità degli utenti Steam attraverso metodi alternativi di attivazione dei giochi. L'applicazione fornisce un'interfaccia web conveniente per gestire lo sblocco dei giochi tramite strumenti popolari: **[SteamTools](https://steamtools.net/)** e **GreenLuma**.
 
 ---
+
+![NR](https://github.com/user-attachments/assets/afacc9be-5494-4d9d-a8db-0b868cba1ddc)
 
 ## Caratteristiche
 

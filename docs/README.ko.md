@@ -37,8 +37,6 @@
   </a>
 </p>
 
-![NR](https://github.com/user-attachments/assets/afacc9be-5494-4d9d-a8db-0b868cba1ddc)
-
 ---
 
 ## 설명
@@ -46,6 +44,8 @@
 **Shadow Library** 는 대체 게임 인증 방법을 통해 Steam 사용자의 기능을 확장하는 소프트웨어 솔루션입니다. 이 애플리케이션은 **SteamTools** 및 **GreenLuma** 라는 인기 있는 도구를 통해 게임 잠금 해제를 관리하기 위한 편리한 웹 인터페이스를 제공합니다.
 
 ---
+
+![NR](https://github.com/user-attachments/assets/afacc9be-5494-4d9d-a8db-0b868cba1ddc)
 
 ## 기능
 
