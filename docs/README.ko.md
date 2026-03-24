@@ -188,5 +188,5 @@
 ---
 
 <p align="center">
-  <strong>Shadow Library</strong> | Python 및 FastAPI 로 생성
+  <strong>Shadow Library</strong> | 게이머에 의해 게이머를 위해 만들어짐
 </p>

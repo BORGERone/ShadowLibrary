@@ -188,5 +188,5 @@
 ---
 
 <p align="center">
-  <strong>Shadow Library</strong> | Создано с помощью Python и FastAPI
+  <strong>Shadow Library</strong> | Создано геймерами для геймеров
 </p>

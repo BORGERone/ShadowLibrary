@@ -188,5 +188,5 @@ Este proyecto está distribuido bajo la [Licencia GPL-3.0](LICENSE).
 ---
 
 <p align="center">
-  <strong>Shadow Library</strong> | Creado con Python y FastAPI
+  <strong>Shadow Library</strong> | Hecho por gamers para gamers
 </p>

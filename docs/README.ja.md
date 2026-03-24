@@ -125,3 +125,9 @@
 ## サポート
 
 問題が発生した場合は、GitHub で Issue を作成してください。
+
+---
+
+<p align="center">
+  <strong>Shadow Library</strong> | ゲーマーによってゲーマーのために作られた
+</p>
