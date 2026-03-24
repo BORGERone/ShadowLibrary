@@ -37,6 +37,8 @@
   </a>
 </p>
 
+![NR](https://github.com/user-attachments/assets/afacc9be-5494-4d9d-a8db-0b868cba1ddc)
+
 ---
 
 ## Описание

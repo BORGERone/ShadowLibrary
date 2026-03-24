@@ -117,6 +117,15 @@ if not os.path.exists(MANIFEST_DIR):
 
 app.mount("/files", StaticFiles(directory=MANIFEST_DIR), name="manifests")
 
+# Маршрут для иконки приложения
+@app.get("/icon.ico")
+async def get_icon():
+    from fastapi.responses import FileResponse
+    icon_path = os.path.join(BASE_DIR, "icon.ico")
+    if os.path.exists(icon_path):
+        return FileResponse(icon_path, media_type="image/x-icon")
+    return FileResponse(os.path.join(DATA_DIR, "icon.ico"), media_type="image/x-icon")
+
 
 # === РАБОТА С ФАЙЛАМИ ===
 def load_db():
@@ -735,6 +744,11 @@ def load_html_template() -> str:
 @app.get("/", response_class=HTMLResponse)
 async def get_index():
     content = load_html_template()
+    # Получаем сохранённый язык
+    saved_language = get_language()
+    # Вставляем язык в HTML перед закрывающим тегом </head>
+    lang_script = f'<script>window.INIT_LANGUAGE = "{saved_language}";</script>\n</head>'
+    content = content.replace('</head>', lang_script)
     return Response(
         content=content,
         media_type="text/html",
@@ -985,4 +999,4 @@ async def shutdown_event():
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=1337)

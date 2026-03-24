@@ -23,24 +23,174 @@
             --card-border: #1a1a1f;
         }
 
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: var(--neon-blue) var(--dark-bg);
+        /* Кастомная верхняя панель */
+        .titlebar {
+            background: linear-gradient(180deg, rgba(20, 20, 25, 0.6) 0%, rgba(10, 10, 12, 0.6) 100%);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.12);
+            box-shadow: 0 2px 15px rgba(0, 240, 255, 0.06);
+            -webkit-app-region: drag;
+            app-region: drag;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            backdrop-filter: blur(25px) saturate(180%);
         }
 
-        *::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        .titlebar-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            color: #f3f4f6;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+            -webkit-app-region: no-drag;
+            app-region: no-drag;
         }
 
-        *::-webkit-scrollbar-track {
-            background: var(--dark-bg);
-            border-radius: 4px;
+        .titlebar-icon {
+            width: 18px;
+            height: 18px;
+            filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.4));
         }
 
-        *::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
-            border-radius: 4px;
+        .titlebar-controls {
+            display: flex;
+            gap: 6px;
+            -webkit-app-region: no-drag;
+            app-region: no-drag;
+        }
+
+        .titlebar-btn {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            border: none;
+        }
+
+        /* Отключаем перетаскивание на всём кроме titlebar */
+        input,
+        textarea,
+        select,
+        button,
+        .gamer-input,
+        .gamer-btn,
+        .modal-content,
+        .modal,
+        .main-content,
+        body {
+            -webkit-app-region: no-drag !important;
+            app-region: no-drag !important;
+        }
+
+        /* Кнопка очистки поля */
+        .gamer-input:not(:placeholder-shown)+button,
+        .gamer-input:focus+button {
+            opacity: 1 !important;
+        }
+
+        .titlebar-btn.minimize {
+            background: linear-gradient(135deg, #348888 0%, #2a6e6e 100%);
+            box-shadow: 0 0 8px rgba(52, 136, 136, 0.5);
+        }
+
+        .titlebar-btn.maximize {
+            background: linear-gradient(135deg, #22BABB 0%, #1a9496 100%);
+            box-shadow: 0 0 8px rgba(34, 186, 187, 0.5);
+        }
+
+        .titlebar-btn.close {
+            background: linear-gradient(135deg, #FA7F08 0%, #c96606 100%);
+            box-shadow: 0 0 10px rgba(250, 127, 8, 0.6);
+        }
+
+        .titlebar-btn:hover {
+            transform: scale(1.25);
+            filter: brightness(1.3);
+        }
+
+        .titlebar-btn svg {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            width: 7px;
+            height: 7px;
+        }
+
+        .titlebar-btn:hover svg {
+            opacity: 1;
+        }
+
+        .main-content {
+            margin-top: 36px;
+            min-height: calc(100vh - 36px);
+        }
+
+        body {
+            padding-top: 46px !important;
+        }
+
+        /* Скрываем нативный скроллбар */
+        html {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        html::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Кастомный скроллбар */
+        .custom-scrollbar {
+            position: fixed;
+            top: 46px;
+            right: 8px;
+            width: 10px;
+            height: calc(100vh - 54px);
+            background: rgba(10, 10, 12, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            border-radius: 0;
+            z-index: 9998;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .custom-scrollbar:hover {
+            opacity: 1 !important;
+        }
+
+        .custom-scrollbar-thumb {
+            width: 100%;
+            background: rgba(0, 240, 255, 0.6);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: 0;
+            cursor: pointer;
+            position: absolute;
+            left: 0;
+            user-select: none;
+        }
+
+        .custom-scrollbar-thumb:hover {
+            background: rgba(0, 240, 255, 0.8);
+            border-color: rgba(0, 240, 255, 0.7);
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+        }
+
+        .custom-scrollbar-thumb:active {
+            background: rgba(0, 240, 255, 0.9);
         }
 
         body {
@@ -122,16 +272,35 @@
             color: #52525b;
         }
 
-        /* Стили для select и option - тёмный фон */
+        /* Стили для select и option - тёмный фон с размытием */
         select.gamer-input {
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
             cursor: pointer;
+            background: rgba(20, 20, 25, 0.6) !important;
+            backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(0, 240, 255, 0.2) !important;
+            box-shadow: 0 2px 10px rgba(0, 240, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        select.gamer-input:hover {
+            background: rgba(20, 20, 25, 0.8) !important;
+            border-color: rgba(0, 240, 255, 0.4) !important;
+            box-shadow: 0 2px 15px rgba(0, 240, 255, 0.15);
+        }
+
+        select.gamer-input:focus {
+            outline: none;
+            background: rgba(20, 20, 25, 0.9) !important;
+            border-color: rgba(0, 240, 255, 0.5) !important;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
 
         select.gamer-input option {
-            background: #141419;
+            background: rgba(20, 20, 25, 0.6);
+            backdrop-filter: blur(15px);
             color: #f3f4f6;
             padding: 8px;
         }
@@ -446,6 +615,33 @@
 </head>
 
 <body class="text-gray-300 min-h-screen p-4 md:p-8">
+    <!-- Кастомная верхняя панель -->
+    <div class="titlebar">
+        <div class="titlebar-title">
+            <img src="/icon.ico" alt="" class="titlebar-icon">
+            <span>Shadow Library</span>
+        </div>
+        <div class="titlebar-controls">
+            <button class="titlebar-btn minimize" onclick="windowMinimize()">
+                <svg viewBox="0 0 8 8" fill="none" stroke="#1a1a1a" stroke-width="1.5">
+                    <line x1="1" y1="4" x2="7" y2="4" stroke-linecap="round" />
+                </svg>
+            </button>
+            <button class="titlebar-btn maximize" onclick="windowToggleMaximize()">
+                <svg viewBox="0 0 8 8" fill="none" stroke="#1a1a1a" stroke-width="1.2">
+                    <rect x="1.5" y="1.5" width="5" height="5" rx="0.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <button class="titlebar-btn close" onclick="windowClose()">
+                <svg viewBox="0 0 8 8" fill="none" stroke="#1a1a1a" stroke-width="1.5">
+                    <line x1="1.5" y1="1.5" x2="6.5" y2="6.5" stroke-linecap="round" />
+                    <line x1="6.5" y1="1.5" x2="1.5" y2="6.5" stroke-linecap="round" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <!-- Фоновые элементы -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden">
         <div
@@ -475,7 +671,7 @@
                 </h1>
             </div>
             <div class="flex gap-3 flex-wrap items-center">
-                <button onclick="document.getElementById('steamPathModal').classList.remove('hidden')"
+                <button onclick="loadSteamPath(); document.getElementById('steamPathModal').classList.remove('hidden')"
                     class="gamer-btn-secondary px-5 py-2.5 rounded-lg text-sm uppercase tracking-wide"
                     data-i18n="steamPath">
                     Путь к Steam
@@ -528,9 +724,21 @@
                 </div>
                 <p class="text-gray-500 text-sm mb-6" data-i18n="enterPath">Укажите корневую папку Steam (где лежит
                     steam.exe)</p>
-                <input type="text" id="steamPathInput" placeholder="C:\\Program Files (x86)\\Steam"
-                    data-i18n-placeholder="enterPath"
-                    class="gamer-input w-full p-4 rounded-xl mb-6 font-mono text-sm text-gray-300 placeholder-gray-600">
+                <div class="relative mb-6">
+                    <input type="text" id="steamPathInput" placeholder="C:\\Program Files (x86)\\Steam"
+                        data-i18n-placeholder="enterPath"
+                        class="gamer-input w-full p-4 rounded-xl font-mono text-sm text-gray-300 placeholder-gray-600 pr-12"
+                        oninput="updateClearButton(this)" onfocus="updateClearButton(this)"
+                        onblur="updateClearButton(this)">
+                    <button type="button" onclick="clearInput('steamPathInput')"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-800/50 hover:bg-gray-700 text-gray-500 hover:text-gray-300 transition-opacity opacity-0">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="4" y1="4" x2="12" y2="12" stroke-linecap="round" />
+                            <line x1="12" y1="4" x2="4" y2="12" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                </div>
                 <div class="flex gap-3">
                     <button onclick="saveSteamPath()"
                         class="flex-1 gamer-btn-primary font-semibold py-3 px-4 rounded-xl uppercase tracking-wide text-xs"
@@ -558,8 +766,20 @@
                 <div>
                     <label class="block text-gray-500 text-sm font-medium mb-3 uppercase tracking-wide text-xs"
                         data-i18n="appId">App ID игры</label>
-                    <input name="app_id" id="app_id" type="text" inputmode="numeric" placeholder="2486820" required
-                        class="gamer-input w-full p-4 rounded-xl text-app placeholder-gray-600 mono-glow text-lg">
+                    <div class="relative">
+                        <input name="app_id" id="app_id" type="text" inputmode="numeric" placeholder="2486820" required
+                            class="gamer-input w-full p-4 rounded-xl text-app placeholder-gray-600 mono-glow text-lg pr-12"
+                            oninput="updateClearButton(this)" onfocus="updateClearButton(this)"
+                            onblur="updateClearButton(this)">
+                        <button type="button" onclick="clearInput('app_id')"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-800/50 hover:bg-gray-700 text-gray-500 hover:text-gray-300 transition-opacity opacity-0">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="4" y1="4" x2="12" y2="12" stroke-linecap="round" />
+                                <line x1="12" y1="4" x2="4" y2="12" stroke-linecap="round" />
+                            </svg>
+                        </button>
+                    </div>
                     <p class="text-gray-600 text-xs mt-2" data-i18n="findAppId"></p>
                 </div>
 
@@ -690,7 +910,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-gray-600 text-sm py-8 border-t border-gray-800">
-            <p>Shadow Library | Author: BORGER | Version: 1.1.0</p>
+            <p>Shadow Library | Author: BORGER | Version: 1.1.1</p>
             <p class="mt-2">
                 <a href="https://github.com/BORGERone/ShadowLibrary" target="_blank"
                     class="text-cyan-400 underline hover:text-cyan-300" data-i18n="github">GitHub</a>
@@ -745,7 +965,10 @@
                 if (data.steam_path) {
                     const inputEl = document.getElementById('steamPathInput');
                     const configEl = document.getElementById('configSteamPath');
-                    if (inputEl) inputEl.value = data.steam_path;
+                    if (inputEl) {
+                        inputEl.value = data.steam_path;
+                        updateClearButton(inputEl);
+                    }
                     if (configEl) {
                         configEl.textContent = data.steam_path;
                         configEl.removeAttribute('data-i18n'); // Убираем data-i18n, чтобы перевод не перезаписывал значение
@@ -759,11 +982,29 @@
             }
         }
 
+        // Очистка поля ввода
+        function clearInput(inputId) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.value = '';
+                input.focus();
+                updateClearButton(input);
+            }
+        }
+
+        // Обновление видимости кнопки очистки
+        function updateClearButton(input) {
+            const wrapper = input.parentElement;
+            const btn = wrapper.querySelector('button');
+            if (btn) {
+                btn.style.opacity = input.value ? '1' : '';
+            }
+        }
+
         // Сохранение пути к Steam
         async function saveSteamPath() {
             const path = document.getElementById('steamPathInput').value.trim();
             if (!path) {
-                alert('Введите путь к Steam');
                 return;
             }
             try {
@@ -776,7 +1017,6 @@
                 if (data.error) {
                     alert('Ошибка: ' + data.error);
                 } else {
-                    alert('✅ Путь сохранён: ' + data.steam_path);
                     document.getElementById('configSteamPath').textContent = data.steam_path;
                     document.getElementById('steamPathModal').classList.add('hidden');
                 }
@@ -836,7 +1076,7 @@
                 const container = document.getElementById('gamesList');
 
                 if (games.length === 0) {
-                    container.innerHTML = '<p class="text-gray-500 text-center py-8">Пока нет взломанных игр</p>';
+                    container.innerHTML = '<p class="text-gray-500 text-center py-8">No cracked games so far</p>';
                     return;
                 }
 
@@ -927,16 +1167,12 @@
 
         // Удаление игры
         async function deleteGame(appId) {
-            const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
-            const t = translations[currentLang] || translations.en || {};
-            const confirmText = (t.deleteConfirm || 'Delete game App ID ') + appId + (t.deleteConfirmSuffix || ' from the list?');
-
-            if (!confirm(confirmText)) return;
-
             try {
                 await fetch(`/api/games/${appId}`, { method: 'DELETE' });
                 loadGamesList();
             } catch (e) {
+                const currentLang = localStorage.getItem('shadow_library_language') || 'ru';
+                const t = translations[currentLang] || translations.en || {};
                 const networkError = t.networkError || 'Network error: ';
                 alert(networkError + e);
             }
@@ -1205,34 +1441,163 @@
                 updateToolLabel();
                 updateSourceLabel();
 
-                // Сначала пробуем получить язык из localStorage
-                const savedLang = localStorage.getItem('shadow_library_language');
-                console.log('[INIT] Saved language from localStorage:', savedLang);
+                // Пробуем получить язык из server (window.INIT_LANGUAGE)
+                const serverLang = window.INIT_LANGUAGE || null;
+                console.log('[INIT] Language from server:', serverLang);
 
-                if (savedLang) {
-                    // Язык уже был выбран пользователем ранее
-                    console.log('[INIT] Using saved language:', savedLang);
-                    document.getElementById('languageSelect').value = savedLang;
-                    applyTranslations(savedLang);
-                    checkApiStatus();
-                    document.body.classList.add('loaded');
-                } else {
-                    // Первый запуск - используем английский
-                    console.log('[INIT] First launch, using English');
-                    const defaultLang = 'en';
-                    localStorage.setItem('shadow_library_language', defaultLang);
-                    document.getElementById('languageSelect').value = defaultLang;
-                    applyTranslations(defaultLang);
-                    checkApiStatus();
-                    document.body.classList.add('loaded');
-                }
+                // Затем пробуем localStorage
+                const savedLang = localStorage.getItem('shadow_library_language');
+                console.log('[INIT] Language from localStorage:', savedLang);
+
+                // Приоритет: server > localStorage > default (en)
+                let langToUse = serverLang || savedLang || 'en';
+
+                console.log('[INIT] Using language:', langToUse);
+                document.getElementById('languageSelect').value = langToUse;
+                localStorage.setItem('shadow_library_language', langToUse);
+                applyTranslations(langToUse);
+                checkApiStatus();
+                document.body.classList.add('loaded');
 
                 // Проверяем и запускаем автообновление для игр с неполными данными
                 console.log('[INIT] Checking for games that need auto-refresh...');
                 checkAndAutoRefreshGames();
             });
         });
+
+        // Функции управления окном для frameless режима
+        function windowMinimize() {
+            if (window.pywebview) {
+                window.pywebview.api.minimize_window();
+            } else {
+                // Fallback для браузера
+                console.log('Minimize window');
+            }
+        }
+
+        function windowToggleMaximize() {
+            if (window.pywebview) {
+                window.pywebview.api.toggle_maximize_window();
+            } else {
+                // Fallback для браузера
+                console.log('Toggle maximize window');
+            }
+        }
+
+        function windowClose() {
+            if (window.pywebview) {
+                window.pywebview.api.close_window();
+            } else {
+                // Fallback для браузера
+                console.log('Close window');
+            }
+        }
+
+        // === КАСТОМНЫЙ СКРОЛЛБАР ===
+        let isDragging = false;
+        let startY = 0;
+        let startScrollTop = 0;
+
+        function initCustomScrollbar() {
+            const scrollbar = document.querySelector('.custom-scrollbar');
+            const thumb = document.querySelector('.custom-scrollbar-thumb');
+
+            if (!scrollbar || !thumb) return;
+
+            // Клик по треку - прокрутка на страницу
+            scrollbar.addEventListener('click', (e) => {
+                if (e.target === scrollbar) {
+                    const rect = scrollbar.getBoundingClientRect();
+                    const clickY = e.clientY - rect.top;
+                    const scrollRatio = clickY / rect.height;
+                    window.scrollTo(0, scrollRatio * (document.documentElement.scrollHeight - window.innerHeight));
+                }
+            });
+
+            // Drag thumb - mousedown
+            thumb.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startY = e.clientY;
+                startScrollTop = window.scrollY;
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            // Mouse move для drag
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                const deltaY = e.clientY - startY;
+                const scrollbarRect = scrollbar.getBoundingClientRect();
+                const thumbRect = thumb.getBoundingClientRect();
+                const maxThumbY = scrollbarRect.height - thumbRect.height;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+                // Вычисляем новую позицию скролла
+                const scrollDelta = (deltaY / maxThumbY) * maxScroll;
+                const newScrollTop = Math.max(0, Math.min(maxScroll, startScrollTop + scrollDelta));
+
+                window.scrollTo(0, newScrollTop);
+
+                // Обновляем позицию thumb визуально
+                const scrollRatio = maxScroll > 0 ? newScrollTop / maxScroll : 0;
+                const newThumbY = scrollRatio * maxThumbY;
+                thumb.style.top = newThumbY + 'px';
+            });
+
+            // Mouse up - завершение drag
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // Обновление позиции thumb при скролле
+            window.addEventListener('scroll', () => {
+                if (!isDragging) {
+                    updateScrollbarThumb();
+                }
+            });
+
+            // Инициализация
+            updateScrollbarThumb();
+        }
+
+        function updateScrollbarThumb() {
+            const thumb = document.querySelector('.custom-scrollbar-thumb');
+            const scrollbar = document.querySelector('.custom-scrollbar');
+            if (!thumb || !scrollbar) return;
+
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.scrollY;
+
+            // Высота thumb пропорциональна видимой области
+            const thumbHeight = Math.max(30, (windowHeight / documentHeight) * (windowHeight - 8));
+            thumb.style.height = thumbHeight + 'px';
+
+            // Позиция thumb
+            const maxScroll = documentHeight - windowHeight;
+            const scrollRatio = maxScroll > 0 ? scrollTop / maxScroll : 0;
+            const scrollbarHeight = scrollbar.offsetHeight;
+            const maxThumbY = scrollbarHeight - thumbHeight;
+            thumb.style.top = (scrollRatio * maxThumbY) + 'px';
+
+            // Показываем/скрываем скроллбар
+            scrollbar.style.opacity = documentHeight > windowHeight ? '0.3' : '0';
+        }
+
+        // Запуск после загрузки
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCustomScrollbar);
+        } else {
+            initCustomScrollbar();
+        }
     </script>
+
+    <!-- Кастомный скроллбар -->
+    <div class="custom-scrollbar">
+        <div class="custom-scrollbar-thumb"></div>
+    </div>
 </body>
 
 </html>

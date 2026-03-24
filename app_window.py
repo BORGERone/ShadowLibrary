@@ -8,6 +8,32 @@ import json
 import os
 import socket
 import ctypes
+import shutil
+import webview
+
+
+# Глобальная переменная для окна
+main_window = None
+
+
+class WindowAPI:
+    """API для управления окном из JavaScript"""
+    
+    def minimize_window(self):
+        """Свернуть окно"""
+        if main_window:
+            main_window.minimize()
+    
+    def toggle_maximize_window(self):
+        """Развернуть/восстановить окно"""
+        if main_window:
+            main_window.toggle_fullscreen()
+    
+    def close_window(self):
+        """Закрыть окно"""
+        if main_window:
+            main_window.destroy()
+        os._exit(0)
 
 
 def get_exe_dir():
@@ -22,6 +48,34 @@ def get_resource_path(filename):
     if getattr(sys, 'frozen', False):
         return os.path.join(sys._MEIPASS, filename)
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
+
+
+# Папка для данных в %APPDATA%
+DATA_DIR = os.path.join(os.environ.get("APPDATA", "."), "ShadowLibrary")
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+
+
+def get_icon_path():
+    """Получить путь к иконке приложения"""
+    # Сначала ищем рядом с exe (в dist)
+    exe_dir = get_exe_dir()
+    icon_path = os.path.join(exe_dir, "icon.ico")
+    if os.path.exists(icon_path):
+        return icon_path
+    # Если нет - используем ресурс
+    return get_resource_path("icon.ico")
+
+
+def ensure_icon_exists():
+    """Убедиться, что иконка существует в папке данных приложения"""
+    icon_in_data = os.path.join(DATA_DIR, "icon.ico")
+    if not os.path.exists(icon_in_data):
+        # Копируем иконку из ресурсов в папку данных
+        source_icon = get_icon_path()
+        if os.path.exists(source_icon):
+            shutil.copy2(source_icon, icon_in_data)
+    return icon_in_data
 
 
 def get_config_path():
@@ -95,23 +149,11 @@ def is_first_launch():
         return True
 
 
-def find_edge_path():
-    edge_paths = [
-        r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
-        r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
-        os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\Edge\Application\msedge.exe"),
-    ]
-    for path in edge_paths:
-        if os.path.exists(path):
-            return path
-    return "msedge"
-
-
 def run_server():
     """Запускает сервер в отдельном потоке"""
     import uvicorn
     from web_server import app
-    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="warning")
+    uvicorn.run(app, host="127.0.0.1", port=1337, log_level="warning")
 
 
 def main():
@@ -121,8 +163,8 @@ def main():
         input("Press Enter to exit...")
         return
 
-    # Проверяем, не запущен ли уже сервер на порту 8000
-    server_running = is_port_in_use(8000)
+    # Проверяем, не запущен ли уже сервер на порту 1337
+    server_running = is_port_in_use(1337)
 
     if not server_running:
         # Запускаем сервер в отдельном потоке
@@ -131,13 +173,13 @@ def main():
         server_thread.start()
         time.sleep(2)
     else:
-        print("Server already running on port 8000")
+        print("Server already running on port 1337")
 
     # Проверяем первый запуск и путь к Steam
     first_launch = is_first_launch()
     need_steam_path = not check_steam_path()
 
-    url = "http://127.0.0.1:8000"
+    url = "http://127.0.0.1:1337"
     params = []
     if need_steam_path:
         params.append("show_steam_modal=1")
@@ -147,26 +189,42 @@ def main():
     if params:
         url += "?" + "&".join(params)
 
-    edge_path = find_edge_path()
-    print(f"Starting Edge in app mode...\nURL: {url}\nPress Ctrl+C to stop\n{'-' * 50}")
+    # Получаем путь к иконке
+    icon_path = ensure_icon_exists()
+    
+    print(f"Starting pywebview window...\nURL: {url}\nIcon: {icon_path}\nPress Ctrl+C to stop\n{'-' * 50}")
 
-    # Запускаем Edge в режиме приложения
-    edge_process = subprocess.Popen([
-        edge_path,
-        f"--app={url}",
-        "--window-size=1200,800",
-        "--window-position=100,100",
-        "--disable-extensions",
-        "--disable-background-networking",
-        "--no-first-run",
-    ])
+    # Создаём API для управления окном
+    api = WindowAPI()
+    
+    # Создаём окно с иконкой через pywebview (frameless для кастомной панели)
+    window = webview.create_window(
+        title="Shadow Library",
+        url=url,
+        js_api=api,
+        width=1200,
+        height=800,
+        x=100,
+        y=100,
+        resizable=True,
+        fullscreen=False,
+        min_size=(800, 600),
+        frameless=True,
+        transparent=True
+    )
+    
+    # Сохраняем ссылку на окно
+    global main_window
+    main_window = window
 
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("\nStopping...")
-    print("Done")
+    # Устанавливаем иконку окна после создания
+    if os.path.exists(icon_path):
+        try:
+            window.set_icon(icon_path)
+        except:
+            pass
+
+    webview.start()
 
 
 if __name__ == "__main__":

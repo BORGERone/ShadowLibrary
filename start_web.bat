@@ -8,8 +8,8 @@ echo   OneKey BORGER Version - Web Server
 echo ============================================================
 echo.
 echo  Запуск веб-сервера...
-echo  Откройте в браузере: http://localhost:8000
-echo  http://127.0.0.1:8000
+echo  Откройте в браузере: http://localhost:1337
+echo  http://127.0.0.1:1337
 echo.
 echo  Нажмите Ctrl+C для остановки сервера
 echo.
