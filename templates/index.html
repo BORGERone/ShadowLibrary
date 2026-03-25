@@ -28,8 +28,9 @@
             background: linear-gradient(180deg, rgba(20, 20, 25, 0.6) 0%, rgba(10, 10, 12, 0.6) 100%);
             border-bottom: 1px solid rgba(0, 240, 255, 0.12);
             box-shadow: 0 2px 15px rgba(0, 240, 255, 0.06);
-            -webkit-app-region: drag;
-            app-region: drag;
+            -webkit-app-region: no-drag;
+            /* Убрали drag */
+            app-region: no-drag;
             height: 36px;
             display: flex;
             align-items: center;
@@ -39,8 +40,22 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 9999;
+            z-index: 10000;
             backdrop-filter: blur(25px) saturate(180%);
+        }
+
+        /* Зона для перетаскивания окна внутри titlebar */
+        .titlebar-drag-zone {
+            position: absolute;
+            top: 0;
+            left: 100px;
+            /* Не перекрывать углы resize */
+            right: 100px;
+            /* Не перекрывать кнопки */
+            height: 36px;
+            -webkit-app-region: drag;
+            app-region: drag;
+            z-index: 10001;
         }
 
         .titlebar-title {
@@ -611,12 +626,108 @@
         body.loaded [data-i18n] {
             opacity: 1;
         }
+
+        /* Resize зоны для frameless окна */
+        .resize-zone {
+            position: fixed;
+            z-index: 10002;
+            pointer-events: auto;
+            -webkit-app-region: no-drag !important;
+            app-region: no-drag !important;
+        }
+
+        .resize-zone.top {
+            top: 0;
+            left: 8px;
+            /* Не перекрывать углы */
+            right: 8px;
+            /* Не перекрывать углы */
+            height: 8px;
+            cursor: ns-resize;
+        }
+
+        .resize-zone.bottom {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            cursor: ns-resize;
+        }
+
+        .resize-zone.left {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 8px;
+            cursor: ew-resize;
+        }
+
+        .resize-zone.right {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 8px;
+            cursor: ew-resize;
+        }
+
+        .resize-zone.top-left {
+            top: 0;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            cursor: nwse-resize;
+        }
+
+        .resize-zone.top-right {
+            top: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            cursor: nesw-resize;
+        }
+
+        .resize-zone.bottom-left {
+            bottom: 0;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            cursor: nesw-resize;
+        }
+
+        .resize-zone.bottom-right {
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            cursor: nwse-resize;
+        }
+
+        /* Отключаем resize на titlebar */
+        .titlebar {
+            pointer-events: none;
+        }
+
+        .titlebar>* {
+            pointer-events: auto;
+        }
     </style>
 </head>
 
 <body class="text-gray-300 min-h-screen p-4 md:p-8">
+    <!-- Resize зоны для frameless окна -->
+    <div class="resize-zone top" data-resize-zone="top"></div>
+    <div class="resize-zone bottom" data-resize-zone="bottom"></div>
+    <div class="resize-zone left" data-resize-zone="left"></div>
+    <div class="resize-zone right" data-resize-zone="right"></div>
+    <div class="resize-zone top-left" data-resize-zone="top-left"></div>
+    <div class="resize-zone top-right" data-resize-zone="top-right"></div>
+    <div class="resize-zone bottom-left" data-resize-zone="bottom-left"></div>
+    <div class="resize-zone bottom-right" data-resize-zone="bottom-right"></div>
+
     <!-- Кастомная верхняя панель -->
     <div class="titlebar">
+        <!-- Зона для перетаскивания -->
+        <div class="titlebar-drag-zone"></div>
         <div class="titlebar-title">
             <img src="/icon.ico" alt="" class="titlebar-icon">
             <span>Shadow Library</span>
@@ -1591,6 +1702,60 @@
             document.addEventListener('DOMContentLoaded', initCustomScrollbar);
         } else {
             initCustomScrollbar();
+        }
+
+        // === RESIZE HANDLER ===
+        // Обработка изменения размера окна
+        let isResizing = false;
+        let currentZone = null;
+
+        function initResizeHandler() {
+            const resizeZones = document.querySelectorAll('[data-resize-zone]');
+
+            resizeZones.forEach(zone => {
+                zone.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();  // Останавливаем всплытие
+                    currentZone = zone.getAttribute('data-resize-zone');
+                    isResizing = true;
+
+                    console.log('Resize START:', currentZone);
+
+                    // Вызываем API для начала resize
+                    if (window.pywebview && window.pywebview.api) {
+                        try {
+                            window.pywebview.api.start_resize(currentZone);
+                        } catch (err) {
+                            console.log('Resize start error:', err);
+                        }
+                    }
+                });
+            });
+        }
+
+        // Отслеживаем mouseup по всему документу
+        document.addEventListener('mouseup', (e) => {
+            if (isResizing) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Resize END');
+                if (window.pywebview && window.pywebview.api) {
+                    try {
+                        window.pywebview.api.end_resize();
+                    } catch (err) {
+                        console.log('Resize end error:', err);
+                    }
+                }
+            }
+            isResizing = false;
+            currentZone = null;
+        });
+
+        // Запуск resize handler
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initResizeHandler);
+        } else {
+            initResizeHandler();
         }
     </script>
 
