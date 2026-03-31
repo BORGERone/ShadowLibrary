@@ -551,22 +551,93 @@ def RemoveUnlock(app_id, tool):
             LOG.warning(f"Not found: {lua_file}")
             return False
         elif tool == "GreenLuma":
+            # Получаем depot_id из базы данных для этой игры
+            db = load_db()
+            game = next((g for g in db if g["app_id"] == app_id), None)
+            depot_ids = set(game.get("depot_ids", [])) if game else set()
+
+            # Если depot_ids нет в базе (старые записи), пытаемся восстановить из depotcache
+            if not depot_ids:
+                steam_path_obj = Path(steam_path)
+                depot_cache = steam_path_obj / "depotcache"
+                if depot_cache.exists():
+                    # Ищем manifest-файлы и извлекаем depot_id
+                    for manifest_file in depot_cache.glob("*.manifest"):
+                        filename = manifest_file.stem  # вид: {depot_id}_{manifest_id}
+                        if "_" in filename:
+                            d_id = filename.split("_")[0]
+                            if d_id.isdigit():
+                                depot_ids.add(d_id)
+                    LOG.info(f"Recovered {len(depot_ids)} depot_ids from depotcache for {app_id}")
+
+            # Удаляем manifest-файлы этой игры из depotcache
+            steam_path_obj = Path(steam_path)
+            depot_cache = steam_path_obj / "depotcache"
+            if depot_cache.exists() and depot_ids:
+                for manifest_file in depot_cache.glob("*.manifest"):
+                    filename = manifest_file.stem
+                    if "_" in filename:
+                        d_id = filename.split("_")[0]
+                        if d_id in depot_ids:
+                            manifest_file.unlink()
+                            LOG.info(f"Removed manifest: {manifest_file.name}")
+
+            # Также удаляем appcache для этой игры (кэш Steam)
+            appcache_dir = steam_path_obj / "appcache"
+            if appcache_dir.exists():
+                # Удаляем appinfo.vdf - Steam пересоздаст его при запуске
+                # Это нужно для удаления кэша о взломанной игре
+                appinfo_file = appcache_dir / "appinfo.vdf"
+                if appinfo_file.exists():
+                    try:
+                        appinfo_file.unlink()
+                        LOG.info("Removed appinfo.vdf (Steam will rebuild)")
+                    except Exception as e:
+                        LOG.warning(f"Could not remove appinfo.vdf: {e}")
+            
+            # Удаляем appmanifest этой игры если он есть (Steam может считать игру установленной)
+            steamapps_dir = steam_path_obj / "steamapps"
+            if steamapps_dir.exists():
+                appmanifest_file = steamapps_dir / f"appmanifest_{app_id}.acf"
+                if appmanifest_file.exists():
+                    appmanifest_file.unlink()
+                    LOG.info(f"Removed appmanifest: {appmanifest_file.name}")
+
+            # Удаляем только файлы .txt из AppList которые содержат depot_id этой игры
             applist_dir = Path(f"{steam_path}/AppList")
             if applist_dir.exists():
-                for f in applist_dir.glob("*.txt"):
-                    f.unlink()
-                LOG.info("Cleared AppList")
+                for txt_file in applist_dir.glob("*.txt"):
+                    try:
+                        content = txt_file.read_text().strip()
+                        if content in depot_ids:
+                            txt_file.unlink()
+                            LOG.info(f"Removed AppList file: {txt_file.name} (depot {content})")
+                    except Exception as e:
+                        LOG.warning(f"Could not process {txt_file.name}: {e}")
+
+            # Удаляем только depots этой игры из config.vdf
             config_path = Path(f"{steam_path}/config/config.vdf")
             if config_path.exists():
                 with open(config_path, "r", encoding="utf-8") as f:
                     content = vdf.loads(f.read())
                 if "depots" in content:
+                    # Удаляем только depots этой игры
+                    removed = False
                     for depot_id in list(content["depots"].keys()):
-                        del content["depots"][depot_id]
-                    with open(config_path, "w", encoding="utf-8") as f:
-                        f.write(vdf.dumps(content))
-                    LOG.info("Removed depots from config.vdf")
-                    return True
+                        if depot_id in depot_ids:
+                            del content["depots"][depot_id]
+                            removed = True
+                            LOG.info(f"Removed depot {depot_id} from config.vdf")
+
+                    if removed:
+                        with open(config_path, "w", encoding="utf-8") as f:
+                            f.write(vdf.dumps(content))
+                        LOG.info(f"Removed depots for app {app_id} from config.vdf")
+                        
+                        # Также удаляем appid из библиотеки Steam (GreenLuma)
+                        # Для этого нужно удалить все следы этой игры
+                        LOG.info(f"GreenLuma removal complete for app {app_id}")
+                        return True
             return False
         else:
             LOG.error(f"Unknown tool: {tool}")
@@ -718,8 +789,11 @@ async def process_game(app_id: str, use_steamtools: bool, use_autocrack: bool, v
                 result["game_name"] = api_name
             
             db = load_db()
+            # Сохраняем depot_id для последующего удаления (нужно для GreenLuma)
+            depot_ids = [d_id for d_id, _ in depot_data]
             game_entry = {"app_id": app_id, "game_name": result["game_name"], "game_icon": result["game_icon"],
-                "depot_count": len(depot_data), "tool": "SteamTools" if use_steamtools else "GreenLuma",
+                "depot_count": len(depot_data), "depot_ids": depot_ids,
+                "tool": "SteamTools" if use_steamtools else "GreenLuma",
                 "source": "SteamAutoCrack" if use_autocrack else "ManifestAutoUpdate",
                 "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")}
             existing = next((g for g in db if g["app_id"] == app_id), None)
@@ -785,6 +859,21 @@ async def api_delete_game(app_id: str):
         tool = game.get("tool", "SteamTools")
         RemoveUnlock(app_id, tool)
         LOG.info(f"Removed: {app_id} ({tool})")
+        
+        # Для GreenLuma - перезапускаем Steam для очистки кэша
+        if tool == "GreenLuma":
+            steam_path = get_steam_path()
+            if steam_path:
+                try:
+                    # Закрываем Steam
+                    subprocess.run(["taskkill", "/f", "/im", "steam.exe"], 
+                                   capture_output=True, timeout=5)
+                    time.sleep(1)
+                    # Запускаем Steam заново
+                    subprocess.Popen([os.path.join(steam_path, "steam.exe")])
+                    LOG.info("Steam restarted to clear cache")
+                except Exception as e:
+                    LOG.warning(f"Could not restart Steam: {e}")
     db = [g for g in db if g["app_id"] != app_id]
     save_db(db)
     return {"status": "ok", "deleted": app_id}
